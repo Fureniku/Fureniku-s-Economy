@@ -1,0 +1,18 @@
+{
+	"credit": "Made with Blockbench",
+	"elements": [
+		{
+			"name": "cash",
+			"from": [4.25, 4.85, 11],
+			"to": [8.25, 5.1, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 0.25], "texture": "#missing"},
+				"east": {"uv": [0, 0, 2, 0.25], "texture": "#missing"},
+				"south": {"uv": [0, 0, 4, 0.25], "texture": "#missing"},
+				"west": {"uv": [0, 0, 2, 0.25], "texture": "#missing"},
+				"up": {"uv": [0, 0, 4, 2], "texture": "#missing"},
+				"down": {"uv": [0, 0, 4, 2], "texture": "#missing"}
+			}
+		}
+	]
+}

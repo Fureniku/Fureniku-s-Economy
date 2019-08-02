@@ -1,0 +1,17 @@
+[
+{
+  "modid": "flenixcities",
+  "name": "FlenixCities",
+  "description": "Adding blocks and decorations used to build cities, as well as an economy system.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "/cities.png",
+  "url": "http://www.silvaniastudios.com/mods/",
+  "updateUrl": "",
+  "authors": ["Flenix"],
+  "credits": "Silvania Studios",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
