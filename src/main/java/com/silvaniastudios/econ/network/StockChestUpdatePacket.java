@@ -1,8 +1,8 @@
 package com.silvaniastudios.econ.network;
 
 import com.silvaniastudios.econ.api.EconUtils;
-import com.silvaniastudios.econ.api.store.container.old.ContainerStockChest;
-import com.silvaniastudios.econ.api.store.entity.TileEntityStockChest;
+import com.silvaniastudios.econ.api.store.old.ContainerStockChest;
+import com.silvaniastudios.econ.api.store.old.TileEntityStockChest;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import io.netty.buffer.ByteBuf;

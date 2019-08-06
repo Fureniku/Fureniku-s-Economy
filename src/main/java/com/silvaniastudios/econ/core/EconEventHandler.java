@@ -10,11 +10,22 @@ import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
-public class EventDrops {
+public class EconEventHandler {
+	
+	@SubscribeEvent
+	public void onPlayerLogin(PlayerLoggedInEvent event) {
+		EntityPlayer player = event.player;
+		String uuid = EntityPlayer.getUUID(player.getGameProfile()).toString();
+		player.sendMessage(new TextComponentString(TextFormatting.GOLD + "You have logged in! There may or may not be completed transactions."));
+	}
 
 	@SubscribeEvent
     public void onEntityDrop(LivingDropsEvent event) {

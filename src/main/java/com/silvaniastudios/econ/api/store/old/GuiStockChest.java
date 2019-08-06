@@ -1,9 +1,8 @@
-package com.silvaniastudios.econ.api.store.container.old;
+package com.silvaniastudios.econ.api.store.old;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.silvaniastudios.econ.api.store.entity.TileEntityStockChest;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.network.StockChestUpdatePacket;
 

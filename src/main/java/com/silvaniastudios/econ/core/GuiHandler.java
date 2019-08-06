@@ -1,14 +1,11 @@
 package com.silvaniastudios.econ.core;
 
-import com.silvaniastudios.econ.api.store.container.old.ContainerAdminShop;
-import com.silvaniastudios.econ.api.store.container.old.ContainerFloatingShelves;
-import com.silvaniastudios.econ.api.store.container.old.ContainerStockChest;
-import com.silvaniastudios.econ.api.store.container.old.GuiAdminShop;
-import com.silvaniastudios.econ.api.store.container.old.GuiFloatingShelves;
-import com.silvaniastudios.econ.api.store.container.old.GuiStockChest;
-import com.silvaniastudios.econ.api.store.entity.TileEntityAdminShop;
-import com.silvaniastudios.econ.api.store.entity.TileEntityFloatingShelves;
-import com.silvaniastudios.econ.api.store.entity.TileEntityStockChest;
+import com.silvaniastudios.econ.api.store.old.ContainerFloatingShelves;
+import com.silvaniastudios.econ.api.store.old.ContainerStockChest;
+import com.silvaniastudios.econ.api.store.old.GuiFloatingShelves;
+import com.silvaniastudios.econ.api.store.old.GuiStockChest;
+import com.silvaniastudios.econ.api.store.old.TileEntityFloatingShelves;
+import com.silvaniastudios.econ.api.store.old.TileEntityStockChest;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -29,11 +26,6 @@ public class GuiHandler implements IGuiHandler {
 					return new ContainerFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
 				}	
 			}
-			case 3: {
-				if(tileEntity instanceof TileEntityAdminShop) {
-					return new ContainerAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
-				}	
-			}
 			case 4: {
 				if(tileEntity instanceof TileEntityStockChest) {
 					return new ContainerStockChest(player.inventory, (TileEntityStockChest) tileEntity);
@@ -50,11 +42,6 @@ public class GuiHandler implements IGuiHandler {
     		case 1: {
     			if (tileEntity instanceof TileEntityFloatingShelves) {
     				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
-    			}	
-    		}
-    		case 3: {
-    			if (tileEntity instanceof TileEntityAdminShop) {
-    				return new GuiAdminShop(player.inventory, (TileEntityAdminShop) tileEntity);
     			}	
     		}
     		case 4: {

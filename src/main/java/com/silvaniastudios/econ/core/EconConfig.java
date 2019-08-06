@@ -12,6 +12,12 @@ public class EconConfig {
 	public static boolean mobsDropMoney = true;
 	@Config.Comment("Can players use cards in a shop, or are they cash-only?")
 	public static boolean allowCardPurchases = true;
+	@Config.Comment("Is the player required to have a debit card to do bank-related transactions? \n"
+			+ "If false, players can withdraw from ATMs and make card purchases at stores without ever needing to get a card.")
+	public static boolean isCardRequired = true;
+	@Config.Comment("The cost of getting a new card. Defaults to $10.00 (on default config settings). \n"
+			+ "The first card is always free, this is for replacements if the first is lost.")
+	public static long replacementCardCost = 1000;
 	@Config.Comment("Used for console output. For logging simplicity, currencySign is ignored and always uses $ for the log."
 			+ "\n0: Only major errors/problems are logged. "
 			+ "\n1: All shop and ATM transactions are logged."

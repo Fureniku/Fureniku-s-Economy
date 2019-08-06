@@ -58,7 +58,7 @@ public class FurenikusEconomy {
         
     	NetworkRegistry.INSTANCE.registerGuiHandler(this, cityGuiHandler);
 	        
-	    MinecraftForge.EVENT_BUS.register(new EventDrops());
+	    MinecraftForge.EVENT_BUS.register(new EconEventHandler());
 	    /*if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 	    	MinecraftForge.EVENT_BUS.register(new StoreStockInfoRender(Minecraft.getMinecraft()));
 	    }*/

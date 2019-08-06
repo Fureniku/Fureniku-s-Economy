@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store.entity;
+package com.silvaniastudios.econ.api.store.old;
 
 import com.silvaniastudios.econ.api.EconUtils;
 

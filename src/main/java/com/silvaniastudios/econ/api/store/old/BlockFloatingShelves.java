@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store.entity;
+package com.silvaniastudios.econ.api.store.old;
 
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock {
+public class BlockFloatingShelves extends BlockContainer implements IStoreBlock {
 	
 	public EconUtils econ = new EconUtils();
 
@@ -25,7 +25,7 @@ public class FloatingShelvesBlock extends BlockContainer implements IStoreBlock 
 	float maxY = 1.0F;
 	float maxZ = 1.0F;
 	
-	public FloatingShelvesBlock() {
+	public BlockFloatingShelves() {
 		super(Material.IRON);
 		this.setCreativeTab(FurenikusEconomy.tabEcon);
 		this.setHardness(2.0F);

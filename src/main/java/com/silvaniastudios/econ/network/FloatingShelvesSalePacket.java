@@ -1,7 +1,7 @@
 package com.silvaniastudios.econ.network;
 
-import com.silvaniastudios.econ.api.store.container.old.ContainerFloatingShelves;
-import com.silvaniastudios.econ.api.store.entity.TileEntityFloatingShelves;
+import com.silvaniastudios.econ.api.store.old.ContainerFloatingShelves;
+import com.silvaniastudios.econ.api.store.old.TileEntityFloatingShelves;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import io.netty.buffer.ByteBuf;

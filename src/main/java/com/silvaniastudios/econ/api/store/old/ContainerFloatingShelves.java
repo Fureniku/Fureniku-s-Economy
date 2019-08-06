@@ -1,6 +1,5 @@
-package com.silvaniastudios.econ.api.store.container.old;
+package com.silvaniastudios.econ.api.store.old;
 
-import com.silvaniastudios.econ.api.store.entity.TileEntityFloatingShelves;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import net.minecraft.entity.player.EntityPlayer;

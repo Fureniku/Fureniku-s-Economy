@@ -1,6 +1,4 @@
-package com.silvaniastudios.econ.api.store.container.old;
-
-import com.silvaniastudios.econ.api.store.entity.TileEntityStockChest;
+package com.silvaniastudios.econ.api.store.old;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

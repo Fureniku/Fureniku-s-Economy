@@ -1,7 +1,7 @@
 package com.silvaniastudios.econ.network;
 
-import com.silvaniastudios.econ.api.store.container.old.ContainerAdminShop;
 import com.silvaniastudios.econ.api.store.entity.TileEntityAdminShop;
+import com.silvaniastudios.econ.api.store.old.ContainerAdminShop;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import io.netty.buffer.ByteBuf;

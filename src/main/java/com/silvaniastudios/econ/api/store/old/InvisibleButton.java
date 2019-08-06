@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store.container.old;
+package com.silvaniastudios.econ.api.store.old;
 
 import org.lwjgl.opengl.GL11;
 
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiTabButton extends GuiButton {
+public class InvisibleButton extends GuiButton {
 
     protected int width;
     protected int height;
@@ -23,17 +23,17 @@ public class GuiTabButton extends GuiButton {
     protected boolean field_82253_i;
     protected String textureString;
     
-    protected static final ResourceLocation field_110332_a = new ResourceLocation("flenixcities", "textures/gui/atmbutton.png");
+    protected static final ResourceLocation field_110332_a = new ResourceLocation("flenixcities", "textures/gui/blank.png");
 
-    public GuiTabButton(int par1, int x, int y, int par4, int par5, String par6Str) {
-    	super(par1, x, y, par4, par5, par6Str);
+    public InvisibleButton(int par1, int par2, int par3, int par4, int par5, String par6Str) {
+    	super(par1, par2, par3, par4, par5, par6Str);
         this.width = 200;
         this.height = 20;
         this.enabled = true;
         this.drawButton = true;
         this.id = par1;
-        this.xPosition = x;
-        this.yPosition = y;
+        this.xPosition = par2;
+        this.yPosition = par3;
         this.width = par4;
         this.height = par5;
         this.displayString = par6Str;

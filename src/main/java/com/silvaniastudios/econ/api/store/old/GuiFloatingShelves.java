@@ -1,18 +1,13 @@
-package com.silvaniastudios.econ.api.store.container.old;
-
-import java.math.RoundingMode;
-import java.text.NumberFormat;
-import java.util.Locale;
+package com.silvaniastudios.econ.api.store.old;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.silvaniastudios.econ.api.EconUtils;
-import com.silvaniastudios.econ.api.store.entity.TileEntityAdminShop;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
-import com.silvaniastudios.econ.network.AdminShopClientPacket;
-import com.silvaniastudios.econ.network.AdminShopPricePacket;
-import com.silvaniastudios.econ.network.SalePacket;
+import com.silvaniastudios.econ.network.FloatingShelvesClientPacket;
+import com.silvaniastudios.econ.network.FloatingShelvesPricePacket;
+import com.silvaniastudios.econ.network.FloatingShelvesSalePacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -25,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAdminShop extends GuiContainer {
+public class GuiFloatingShelves extends GuiContainer {
 	
 	public EconUtils econ = new EconUtils();
 	
@@ -34,21 +29,14 @@ public class GuiAdminShop extends GuiContainer {
 	int y;
 	int z;
 	
-	private ItemStack slot0;
-	private ItemStack slot1;
-	private ItemStack slot2;
-	private ItemStack slot3;
-	
-	private TileEntityAdminShop shelvesEntity;
-	
-	String buyPrice1 = "" + AdminShopPricePacket.buyPrice1;		
-	String sellPrice1 = "" + AdminShopPricePacket.sellPrice1;		
-	String buyPrice2 = "" + AdminShopPricePacket.buyPrice2;		
-	String sellPrice2 = "" + AdminShopPricePacket.sellPrice2;		
-	String buyPrice3 = "" + AdminShopPricePacket.buyPrice3;		
-	String sellPrice3 = "" + AdminShopPricePacket.sellPrice3;		
-	String buyPrice4 = "" + AdminShopPricePacket.buyPrice4;		
-	String sellPrice4 = "" + AdminShopPricePacket.sellPrice4;
+	String buyPrice1 = "" + FloatingShelvesPricePacket.buyPrice1;
+	String sellPrice1 = "" + FloatingShelvesPricePacket.sellPrice1;
+	String buyPrice2 = "" + FloatingShelvesPricePacket.buyPrice2;
+	String sellPrice2 = "" + FloatingShelvesPricePacket.sellPrice2;
+	String buyPrice3 = "" + FloatingShelvesPricePacket.buyPrice3;
+	String sellPrice3 = "" + FloatingShelvesPricePacket.sellPrice3;
+	String buyPrice4 = "" + FloatingShelvesPricePacket.buyPrice4;
+	String sellPrice4 = "" + FloatingShelvesPricePacket.sellPrice4;
 	
 	String displayBuy1 = "";
 	String displayBuy2 = "";
@@ -58,9 +46,21 @@ public class GuiAdminShop extends GuiContainer {
 	String displaySell2 = "";
 	String displaySell3 = "";
 	String displaySell4 = "";
+	
+	private ItemStack slot0;
+	private ItemStack slot1;
+	private ItemStack slot2;
+	private ItemStack slot3;
+	
+	boolean buying;
+	boolean selling;
+	
+	private TileEntityFloatingShelves shelvesEntity;
+	
+	private TileEntityStockChest stockEntity;
 
-	public GuiAdminShop(InventoryPlayer invPlayer, TileEntityAdminShop shelvesEntity) {
-		super(new ContainerAdminShop(invPlayer, shelvesEntity));
+	public GuiFloatingShelves(InventoryPlayer invPlayer, TileEntityFloatingShelves shelvesEntity) {
+		super(new ContainerFloatingShelves(invPlayer, shelvesEntity));
 		this.shelvesEntity = shelvesEntity;
 		
 		x = shelvesEntity.getPos().getX();
@@ -75,6 +75,13 @@ public class GuiAdminShop extends GuiContainer {
 		displaySell2 = "" + shelvesEntity.sellPrice2;
 		displaySell3 = "" + shelvesEntity.sellPrice3;
 		displaySell4 = "" + shelvesEntity.sellPrice4;
+		
+		if (invPlayer.player.world.getTileEntity(shelvesEntity.getPos()) instanceof TileEntityStockChest) {
+			stockEntity = (TileEntityStockChest) invPlayer.player.world.getTileEntity(shelvesEntity.getPos());
+			
+			buying = stockEntity.buying;
+			selling = stockEntity.selling;
+		}
 		
 		this.slot0 = this.shelvesEntity.getStackInSlot(0);
 		this.slot1 = this.shelvesEntity.getStackInSlot(1);
@@ -111,7 +118,7 @@ public class GuiAdminShop extends GuiContainer {
 	int slot4Qty = 1;
 	
 	public boolean isShopOwner() {
-		if (mc.player.capabilities.isCreativeMode) {
+		if (mc.player.getName().equalsIgnoreCase(FloatingShelvesPricePacket.ownerName)) {
 			return true;
 		}
 		return false;
@@ -269,16 +276,16 @@ public class GuiAdminShop extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		if (sell1Text.getText().equals("0") || sell1Text.getText().equals("0.0") || (econ.parseDouble(sell1Text.getText()) > econ.parseDouble(buy1Text.getText()))) {
+		if (econ.parseLong(buy1Text.getText()) > 0 && econ.parseLong(sell1Text.getText()) > econ.parseLong(buy1Text.getText())) {
 			sellButton1.enabled = false;
 		}
-		if (sell2Text.getText().equals("0") || sell2Text.getText().equals("0.0") || (econ.parseDouble(sell2Text.getText()) > econ.parseDouble(buy2Text.getText()))) {
+		if (econ.parseLong(buy2Text.getText()) > 0 && econ.parseLong(sell2Text.getText()) > econ.parseLong(buy2Text.getText())) {
 			sellButton2.enabled = false;
 		}
-		if (sell3Text.getText().equals("0") || sell3Text.getText().equals("0.0") || (econ.parseDouble(sell3Text.getText()) > econ.parseDouble(buy3Text.getText()))) {
+		if (econ.parseLong(buy3Text.getText()) > 0 && econ.parseLong(sell3Text.getText()) > econ.parseLong(buy3Text.getText())) {
 			sellButton3.enabled = false;
 		}
-		if (sell4Text.getText().equals("0") || sell4Text.getText().equals("0.0") || (econ.parseDouble(sell4Text.getText()) > econ.parseDouble(buy4Text.getText()))) {
+		if (econ.parseLong(buy4Text.getText()) > 0 && econ.parseLong(sell4Text.getText()) > econ.parseLong(buy4Text.getText())) {
 			sellButton4.enabled = false;
 		}
 		if (slot0 == null) {
@@ -318,20 +325,15 @@ public class GuiAdminShop extends GuiContainer {
 			sell3Text.drawTextBox();
 			sell4Text.drawTextBox();
 		} else {
-			NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-			nf.setMinimumFractionDigits(2);
-			nf.setMaximumFractionDigits(2);
-			nf.setRoundingMode(RoundingMode.HALF_UP);
+			String buy1 = econ.formatBalance(econ.parseLong("" + displayBuy1));
+			String buy2 = econ.formatBalance(econ.parseLong("" + displayBuy2));
+			String buy3 = econ.formatBalance(econ.parseLong("" + displayBuy3));
+			String buy4 = econ.formatBalance(econ.parseLong("" + displayBuy4));
 			
-			String buy1 = nf.format(econ.parseDouble("" + displayBuy1));
-			String buy2 = nf.format(econ.parseDouble("" + displayBuy2));
-			String buy3 = nf.format(econ.parseDouble("" + displayBuy3));
-			String buy4 = nf.format(econ.parseDouble("" + displayBuy4));
-			
-			String sell1 = nf.format(econ.parseDouble("" + displaySell1));
-			String sell2 = nf.format(econ.parseDouble("" + displaySell2));
-			String sell3 = nf.format(econ.parseDouble("" + displaySell3));
-			String sell4 = nf.format(econ.parseDouble("" + displaySell4));
+			String sell1 = econ.formatBalance(econ.parseLong("" + displaySell1));
+			String sell2 = econ.formatBalance(econ.parseLong("" + displaySell2));
+			String sell3 = econ.formatBalance(econ.parseLong("" + displaySell3));
+			String sell4 = econ.formatBalance(econ.parseLong("" + displaySell4));
 			
 			
 			fontRenderer.drawString("$" + buy1, 51 - fontRenderer.getStringWidth(buy1) / 2, 54, 4210752);
@@ -347,7 +349,7 @@ public class GuiAdminShop extends GuiContainer {
 		}
 	    
 		fontRenderer.drawString(mode, 5, 19, 4210752);
-		fontRenderer.drawString("Server Shop", 36, 5, 4210752);
+		fontRenderer.drawString(FloatingShelvesPricePacket.ownerName + "'s Shop", 36, 5, 4210752);
     	//fontRenderer.drawString("You have: " + econ.reqClientInventoryBalance(), 100, 5, 4210752);
 	}
 	
@@ -458,7 +460,7 @@ public class GuiAdminShop extends GuiContainer {
 	
 	public void updateTileEntity() {
         if (isShopOwner()) {
-        	FurenikusEconomy.network.sendToServer(new AdminShopClientPacket(
+        	FurenikusEconomy.network.sendToServer(new FloatingShelvesClientPacket(
         			buy1Text.getText(), 
         			sell1Text.getText(), 
         			buy2Text.getText(), 
@@ -473,7 +475,10 @@ public class GuiAdminShop extends GuiContainer {
 	
 	public void sendSalePacket(String pktId, int slotId) {
 		System.out.println("sending sale packet: " + pktId + ", slot: " + slotId);
-		FurenikusEconomy.network.sendToServer(new SalePacket(pktId, slotId, x, y, z));
+		FurenikusEconomy.network.sendToServer(new FloatingShelvesSalePacket(
+				pktId, 
+				slotId, 
+				x, y, z));
 	}
 	
 	@Override
