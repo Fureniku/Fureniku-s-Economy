@@ -7,15 +7,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
-public class CurrencyStorage implements IStorage<CurrencyCapability> {
+public class CurrencyStorage implements IStorage<ICurrency> {
 
 	@Override
-	public NBTBase writeNBT(Capability<CurrencyCapability> capability, CurrencyCapability instance, EnumFacing side) {
+	public NBTBase writeNBT(Capability<ICurrency> capability, ICurrency instance, EnumFacing side) {
 		return new NBTTagLong(instance.getMoney());
 	}
 
 	@Override
-	public void readNBT(Capability<CurrencyCapability> capability, CurrencyCapability instance, EnumFacing side, NBTBase nbt) {
+	public void readNBT(Capability<ICurrency> capability, ICurrency instance, EnumFacing side, NBTBase nbt) {
 		instance.setMoney(((NBTPrimitive) nbt).getLong());
 	}
 

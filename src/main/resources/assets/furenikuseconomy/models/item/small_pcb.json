@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "flenixcities:items/small_pcb"
+		"layer0": "furenikuseconomy:items/small_pcb"
 	}
 }

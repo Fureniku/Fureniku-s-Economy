@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "flenixcities:items/note200"
+		"layer0": "furenikuseconomy:items/note200"
 	}
 }

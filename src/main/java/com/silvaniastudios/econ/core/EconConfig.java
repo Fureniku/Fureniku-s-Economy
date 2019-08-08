@@ -17,7 +17,7 @@ public class EconConfig {
 	public static boolean isCardRequired = true;
 	@Config.Comment("The cost of getting a new card. Defaults to $10.00 (on default config settings). \n"
 			+ "The first card is always free, this is for replacements if the first is lost.")
-	public static long replacementCardCost = 1000;
+	public static int replacementCardCost = 1000;
 	@Config.Comment("Used for console output. For logging simplicity, currencySign is ignored and always uses $ for the log."
 			+ "\n0: Only major errors/problems are logged. "
 			+ "\n1: All shop and ATM transactions are logged."

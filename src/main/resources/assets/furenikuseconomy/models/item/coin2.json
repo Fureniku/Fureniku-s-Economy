@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "flenixcities:items/coin2"
+		"layer0": "furenikuseconomy:items/coin2"
 	}
 }

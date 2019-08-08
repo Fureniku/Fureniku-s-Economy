@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "flenixcities:items/debitCard"
+		"layer0": "furenikuseconomy:items/debitCard"
 	}
 }

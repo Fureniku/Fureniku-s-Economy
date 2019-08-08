@@ -11,21 +11,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class CoreBlocks {
+public class EconBlocks {
 	
-	public static ATMBlock atmBlock = new ATMBlock("atmBlock");
+	public static ATMBlock atm_block = new ATMBlock("atm_block");
 	
 	public static void register(IForgeRegistry<Block> registry) {
 		//Base stuff
-		registry.register(atmBlock);
+		registry.register(atm_block);
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry) {
-		registry.register(new CitiesItemBlock(atmBlock).setRegistryName(atmBlock.getRegistryName()));
+		registry.register(new CitiesItemBlock(atm_block).setRegistryName(atm_block.getRegistryName()));
 	}
 	
 	public static void registerModels() {
-		atmBlock.initModel();
+		atm_block.initModel();
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -7,7 +7,7 @@ import com.silvaniastudios.econ.core.items.ItemMoney;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class CoreItems {		
+public class EconItems {		
 	public static ItemMoney coin1 = new ItemMoney(1, "coin1");
 	public static ItemMoney coin2 = new ItemMoney(2, "coin2");
 	public static ItemMoney coin5 = new ItemMoney(5, "coin5");

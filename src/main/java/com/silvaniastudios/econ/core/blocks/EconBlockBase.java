@@ -16,11 +16,11 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CitiesBlockBase extends Block {
+public class EconBlockBase extends Block {
 	
 	protected String name;
 	
-	public CitiesBlockBase(String name, Material mat) {
+	public EconBlockBase(String name, Material mat) {
 		super(mat);
 		this.name = name;
 		

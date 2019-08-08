@@ -1,9 +1,7 @@
 package com.silvaniastudios.econ.core.blocks;
 
 import com.silvaniastudios.econ.api.EconUtils;
-import com.silvaniastudios.econ.api.capability.currency.CurrencyProvider;
-import com.silvaniastudios.econ.api.capability.currency.ICurrency;
-import com.silvaniastudios.econ.core.CoreItems;
+import com.silvaniastudios.econ.core.EconItems;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 import com.silvaniastudios.econ.network.ServerBalancePacket;
@@ -29,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ATMBlock extends CitiesBlockBase {	
+public class ATMBlock extends EconBlockBase {	
 	
 	public EconUtils econ = new EconUtils();
 	
@@ -48,21 +46,21 @@ public class ATMBlock extends CitiesBlockBase {
         	if (player.isSneaking()) {
         		econ.depositAllCash(player);
         	} else if (player.getHeldItemMainhand() != null) {
-        		if (player.getHeldItemMainhand().getItem() == CoreItems.debitCard) {
+        		if (player.getHeldItemMainhand().getItem() == EconItems.debitCard) {
         			world.playSound(player, pos, atmSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
         			FurenikusEconomy.proxy.openGui(0);
         			econ.getBalance(player);                 
-        		} else {  
-        			ICurrency currency = player.getCapability(CurrencyProvider.CURRENCY, null);
+        		} else {
         			ItemStack item = player.getHeldItemMainhand();
 
         			if (item.getItem() instanceof ItemMoney) {
         				ItemMoney money = (ItemMoney) item.getItem();
-        				currency.addMoney(money.moneyValue);
-        				player.sendMessage(new TextComponentString(TextFormatting.GOLD + econ.formatBalance(money.getMoneyValue()) + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + econ.formatBalance(currency.getMoney())));
-        				player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!"));
-
-        				item.setCount(item.getCount()-1);
+        				if (econ.addMoney(player, money.moneyValue)) {
+	        				player.sendMessage(new TextComponentString(TextFormatting.GOLD + econ.formatBalance(money.getMoneyValue()) + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + econ.formatBalance(econ.getBalance(player))));
+	        				player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!"));
+	
+	        				item.setCount(item.getCount()-1);
+        				}
         			} else {
         				FurenikusEconomy.proxy.openGui(1);
         			}

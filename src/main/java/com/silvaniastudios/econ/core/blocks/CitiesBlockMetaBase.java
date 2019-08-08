@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class CitiesBlockMetaBase extends CitiesBlockBase implements IMetaBlockName {
+public class CitiesBlockMetaBase extends EconBlockBase implements IMetaBlockName {
 	
 	public static PropertyEnum<EnumMeta> enumMeta;
 

@@ -1,6 +1,10 @@
 package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.api.EconUtils;
+import com.silvaniastudios.econ.api.capability.CapabilityEventHandler;
+import com.silvaniastudios.econ.api.capability.currency.CurrencyCapability;
+import com.silvaniastudios.econ.api.capability.currency.CurrencyStorage;
+import com.silvaniastudios.econ.api.capability.currency.ICurrency;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -8,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -31,20 +36,23 @@ public class FurenikusEconomy {
 
     @SidedProxy(clientSide="com.silvaniastudios.econ.core.client.ClientProxy", serverSide="com.silvaniastudios.econ.core.CommonProxy")
     public static CommonProxy proxy;
-    public static EconUtils utils;
+    public static EconUtils utils = new EconUtils();
     
 	public static CreativeTabs tabEcon = new CreativeTabs("tabEcon") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(CoreItems.note10000, 1, 0);
+			return new ItemStack(EconItems.note10000, 1, 0);
 		}
 	};
 	
 	public static String configPath;
 	public static SimpleNetworkWrapper network;
     
-    @EventHandler
+    @SuppressWarnings("deprecation")
+	@EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+    	CapabilityManager.INSTANCE.register(ICurrency.class, new CurrencyStorage(), CurrencyCapability.class);
+    	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FurenikusEconomy");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side
     	//network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
@@ -58,6 +66,7 @@ public class FurenikusEconomy {
     	//network.registerMessage(FloatingShelvesSalePacket.Handler.class, FloatingShelvesSalePacket.class, 8, Side.SERVER);
     	//network.registerMessage(StockChestUpdatePacket.Handler.class, StockChestUpdatePacket.class, 9, Side.SERVER);
 	    MinecraftForge.EVENT_BUS.register(new EconEventHandler());
+	    MinecraftForge.EVENT_BUS.register(new CapabilityEventHandler());
 	    /*if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 	    	MinecraftForge.EVENT_BUS.register(new StoreStockInfoRender(Minecraft.getMinecraft()));
 	    }*/
@@ -84,19 +93,19 @@ public class FurenikusEconomy {
 		
 		@SubscribeEvent
 		public static void registerItems(RegistryEvent.Register<Item> event) {
-			CoreItems.register(event.getRegistry());
-			CoreBlocks.registerItemBlocks(event.getRegistry());
+			EconItems.register(event.getRegistry());
+			EconBlocks.registerItemBlocks(event.getRegistry());
 		}
 		
 		@SubscribeEvent
 		public static void registerModels(ModelRegistryEvent event) {
-			CoreItems.registerModels();
-			CoreBlocks.registerModels();
+			EconItems.registerModels();
+			EconBlocks.registerModels();
 		}
 		
 		@SubscribeEvent
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
-			CoreBlocks.register(event.getRegistry());
+			EconBlocks.register(event.getRegistry());
 		}
 	}
     

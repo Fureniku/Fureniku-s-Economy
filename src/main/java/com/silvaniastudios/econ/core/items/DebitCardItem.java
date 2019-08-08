@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.silvaniastudios.econ.core.CoreItems;
+import com.silvaniastudios.econ.core.EconItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -82,7 +82,7 @@ public class DebitCardItem extends EconItemBase {
 	
 	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
-		if (held.getItem() != CoreItems.debitCard) {
+		if (held.getItem() != EconItems.debitCard) {
 			return "";
 		}
 		
@@ -102,7 +102,7 @@ public class DebitCardItem extends EconItemBase {
 	
 	public static String checkCardOwner(EntityPlayer player, ItemStack held) {
 		if (held != null) {
-			if (held.getItem() == CoreItems.debitCard) {
+			if (held.getItem() == EconItems.debitCard) {
 				return held.getTagCompound().getString("playerUUID");
 			}
 		}

@@ -7,8 +7,8 @@ import java.util.Locale;
 
 import com.silvaniastudios.econ.api.capability.currency.CurrencyProvider;
 import com.silvaniastudios.econ.api.capability.currency.ICurrency;
-import com.silvaniastudios.econ.core.CoreItems;
 import com.silvaniastudios.econ.core.EconConfig;
+import com.silvaniastudios.econ.core.EconItems;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 
@@ -29,21 +29,21 @@ public class EconUtils {
 		itemNotes.clear();
 		itemMoney.clear();
 		
-		itemCoins.add(CoreItems.coin1);
-		itemCoins.add(CoreItems.coin2);
-		itemCoins.add(CoreItems.coin5);
-		itemCoins.add(CoreItems.coin10);
-		itemCoins.add(CoreItems.coin25);
-		itemCoins.add(CoreItems.coin50);
-		itemCoins.add(CoreItems.coin100);
+		itemCoins.add(EconItems.coin1);
+		itemCoins.add(EconItems.coin2);
+		itemCoins.add(EconItems.coin5);
+		itemCoins.add(EconItems.coin10);
+		itemCoins.add(EconItems.coin25);
+		itemCoins.add(EconItems.coin50);
+		itemCoins.add(EconItems.coin100);
 		
-		itemNotes.add(CoreItems.note100);
-		itemNotes.add(CoreItems.note200);
-		itemNotes.add(CoreItems.note500);
-		itemNotes.add(CoreItems.note1000);
-		itemNotes.add(CoreItems.note2000);
-		itemNotes.add(CoreItems.note5000);
-		itemNotes.add(CoreItems.note10000);
+		itemNotes.add(EconItems.note100);
+		itemNotes.add(EconItems.note200);
+		itemNotes.add(EconItems.note500);
+		itemNotes.add(EconItems.note1000);
+		itemNotes.add(EconItems.note2000);
+		itemNotes.add(EconItems.note5000);
+		itemNotes.add(EconItems.note10000);
 		
 		itemMoney.addAll(itemCoins);
 		itemMoney.addAll(itemNotes);
@@ -71,16 +71,15 @@ public class EconUtils {
 	 * @param EntityPlayer The player
 	 */
 	public void depositAllCash(EntityPlayer player) {
-		ICurrency currency = player.getCapability(CurrencyProvider.CURRENCY, null);
-        
 		long cash = getInventoryCash(player); //Check how much cash the player has on them
 		
-		currency.addMoney(cash);
-		removeAllPlayerCash(player);
+		if (addMoney(player, cash)) {
+			removeAllPlayerCash(player);
 
-        player.sendMessage(new TextComponentString(
-        		TextFormatting.GOLD + formatBalance(cash) + TextFormatting.GREEN + " Deposited! Your balance is now " + 
-        		TextFormatting.GOLD + formatBalance(currency.getMoney())));
+			player.sendMessage(new TextComponentString(
+	        		TextFormatting.GOLD + formatBalance(cash) + TextFormatting.GREEN + " Deposited! Your balance is now " + 
+	        		TextFormatting.GOLD + formatBalance(getBalance(player))));
+		}
 	}
 	
 	/**
@@ -116,8 +115,8 @@ public class EconUtils {
 		long toBank = 0;	
 		
 		while (change >= 10000) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note10000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note10000));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note10000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note10000));
 				debug("$100 to inventory :)");
 			} else {
 				debug("Sending $100 to bank");
@@ -127,8 +126,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 5000) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note5000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note5000));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note5000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note5000));
 				debug("$50 to inventory :)");
 			} else {
 				debug("$50 to bank.");
@@ -138,8 +137,8 @@ public class EconUtils {
 		} 
 		
 		while (change >= 2000) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note2000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note2000));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note2000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note2000));
 				debug("$20 to inventory :)");
 			} else {
 				debug("$20 to bank.");
@@ -149,8 +148,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 1000) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note1000))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note1000));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note1000))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note1000));
 				debug("$10 to inventory :)");
 			} else {
 				debug("$10 to bank.");
@@ -160,8 +159,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 500) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note500))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note500));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note500))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note500));
 				debug("$5 to inventory :)");
 			} else {
 				debug("$5 to bank.");
@@ -171,8 +170,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 200) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note200))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note200));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note200))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note200));
 				debug("$2 to inventory :)");
 			} else {
 				debug("$2 to bank.");
@@ -182,8 +181,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 100) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.note100))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.note100));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.note100))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.note100));
 				debug("$1 to inventory :)");
 			} else {
 				debug("$1 to bank.");
@@ -192,8 +191,8 @@ public class EconUtils {
 			change = change - 100;
 		}
 		while (change >= 50) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin50))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin50));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin50))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin50));
 				debug("$0.50 to inventory :)");
 			} else {
 				debug("$0.50 to bank.");
@@ -203,8 +202,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 25) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin25))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin25));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin25))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin25));
 				debug("$0.25 to inventory :)");
 			} else {
 				debug("$0.25 to bank.");
@@ -214,8 +213,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 10) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin10))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin10));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin10))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin10));
 				debug("$0.10 to inventory :)");
 			} else {
 				debug("$0.10 to bank.");
@@ -225,8 +224,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 5) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin5))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin5));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin5))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin5));
 				debug("$0.05 to inventory :)");
 			} else {
 				debug("$0.05 to bank.");
@@ -236,8 +235,8 @@ public class EconUtils {
 		}
 		
 		while (change >= 2) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin2))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin2));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin2))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin2));
 				debug("$0.02 to inventory :)");
 			} else {
 				debug("$0.02 to bank.");
@@ -247,8 +246,8 @@ public class EconUtils {
 		}
 		
 		while (change > 0) {
-			if (inventoryHasSpace(entityPlayer, new ItemStack(CoreItems.coin1))) { 
-				entityPlayer.inventory.addItemStackToInventory(new ItemStack(CoreItems.coin1));
+			if (inventoryHasSpace(entityPlayer, new ItemStack(EconItems.coin1))) { 
+				entityPlayer.inventory.addItemStackToInventory(new ItemStack(EconItems.coin1));
 				debug("$0.01 to inventory :)");
 			} else {
 				debug("$0.01 to bank.");
@@ -366,7 +365,7 @@ public class EconUtils {
 			long cardBalance = getBalance(player);
 			
 			long totalBalance = invBalance + cardBalance;
-			if (player.inventory.hasItemStack(new ItemStack(CoreItems.debitCard))) {
+			if (player.inventory.hasItemStack(new ItemStack(EconItems.debitCard))) {
 				if (invBalance < value) {
 					if (totalBalance >= value) {
 						long payAmount = value - invBalance;
@@ -454,7 +453,7 @@ public class EconUtils {
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == CoreItems.debitCard) {
+				if (stack.getItem() == EconItems.debitCard) {
 					if (player.getUniqueID().toString().equals(stack.getTagCompound().getString("playerUUID"))) {
 						return true;
 					}
@@ -465,9 +464,21 @@ public class EconUtils {
 	}
 	
 	public void depositToAccount(EntityPlayer player, long deposit) {
+		if (addMoney(player, deposit)) {
+			player.sendMessage(new TextComponentString(TextFormatting.GOLD + formatBalance(deposit) + TextFormatting.GREEN + " was sent to your bank account. Your current total balance is " + TextFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
+		}
+	}
+	
+	public boolean addMoney(EntityPlayer player, long amount) {
 		ICurrency currency = player.getCapability(CurrencyProvider.CURRENCY, null);
-		currency.addMoney(deposit);
-		player.sendMessage(new TextComponentString(TextFormatting.GOLD + formatBalance(deposit) + TextFormatting.GREEN + " was sent to your bank account. Your current total balance is " + TextFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
+		
+		if (currency == null) {
+			FurenikusEconomy.log(0, player.getName() + " has no currency capability set! This is a bug!");
+			return false;
+		}
+		
+		currency.addMoney(amount);
+		return true;
 	}
 	
 	public int getMoneyTypeCountFromArray(int[] moneyCount, ItemMoney item) {
