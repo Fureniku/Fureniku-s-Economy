@@ -1,5 +1,7 @@
 package com.silvaniastudios.econ.core;
 
+import com.silvaniastudios.econ.api.EconUtils;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -26,10 +28,10 @@ public class FurenikusEconomy {
 	
     @Instance(FurenikusEconomy.MODID)
     public static FurenikusEconomy instance;
-    public static GuiHandler cityGuiHandler = new GuiHandler();
 
     @SidedProxy(clientSide="com.silvaniastudios.econ.core.client.ClientProxy", serverSide="com.silvaniastudios.econ.core.CommonProxy")
     public static CommonProxy proxy;
+    public static EconUtils utils;
     
 	public static CreativeTabs tabEcon = new CreativeTabs("tabEcon") {
 		@Override
@@ -55,9 +57,6 @@ public class FurenikusEconomy {
     	//network.registerMessage(FloatingShelvesClientPacket.Handler.class, FloatingShelvesClientPacket.class, 7, Side.SERVER);
     	//network.registerMessage(FloatingShelvesSalePacket.Handler.class, FloatingShelvesSalePacket.class, 8, Side.SERVER);
     	//network.registerMessage(StockChestUpdatePacket.Handler.class, StockChestUpdatePacket.class, 9, Side.SERVER);
-        
-    	NetworkRegistry.INSTANCE.registerGuiHandler(this, cityGuiHandler);
-	        
 	    MinecraftForge.EVENT_BUS.register(new EconEventHandler());
 	    /*if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 	    	MinecraftForge.EVENT_BUS.register(new StoreStockInfoRender(Minecraft.getMinecraft()));
@@ -72,6 +71,8 @@ public class FurenikusEconomy {
     @EventHandler
     public void Init(FMLInitializationEvent event) {
     	proxy.init();
+    	utils.init();
+    	NetworkRegistry.INSTANCE.registerGuiHandler(FurenikusEconomy.instance, new GuiHandler());
     }
 
 

@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -45,10 +44,6 @@ public class FloatingShelvesEntity extends ShopBaseEntity implements ICapability
 		}
 		
 		return super.getCapability(capability, facing);
-	}
-	
-	public Container createContainer(EntityPlayer player) {
-		return new FloatingShelvesContainer(player.inventory, this);
 	}
 	
 	@Override

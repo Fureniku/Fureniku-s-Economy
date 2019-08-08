@@ -2,6 +2,7 @@ package com.silvaniastudios.econ.api;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import com.silvaniastudios.econ.api.capability.currency.CurrencyProvider;
@@ -19,8 +20,35 @@ import net.minecraft.util.text.TextFormatting;
 
 public class EconUtils {
 	
-	public EconUtils(){}
+	public ArrayList<ItemMoney> itemCoins = new ArrayList<>();
+	public ArrayList<ItemMoney> itemNotes = new ArrayList<>();
+	public ArrayList<ItemMoney> itemMoney = new ArrayList<>();
+	
+	public void init() {
+		itemCoins.clear();
+		itemNotes.clear();
+		itemMoney.clear();
 		
+		itemCoins.add(CoreItems.coin1);
+		itemCoins.add(CoreItems.coin2);
+		itemCoins.add(CoreItems.coin5);
+		itemCoins.add(CoreItems.coin10);
+		itemCoins.add(CoreItems.coin25);
+		itemCoins.add(CoreItems.coin50);
+		itemCoins.add(CoreItems.coin100);
+		
+		itemNotes.add(CoreItems.note100);
+		itemNotes.add(CoreItems.note200);
+		itemNotes.add(CoreItems.note500);
+		itemNotes.add(CoreItems.note1000);
+		itemNotes.add(CoreItems.note2000);
+		itemNotes.add(CoreItems.note5000);
+		itemNotes.add(CoreItems.note10000);
+		
+		itemMoney.addAll(itemCoins);
+		itemMoney.addAll(itemNotes);
+	}
+	
 	public void debug(String s) {
 		FurenikusEconomy.log(3, "[Utils] " + s);
 	}
@@ -440,5 +468,44 @@ public class EconUtils {
 		ICurrency currency = player.getCapability(CurrencyProvider.CURRENCY, null);
 		currency.addMoney(deposit);
 		player.sendMessage(new TextComponentString(TextFormatting.GOLD + formatBalance(deposit) + TextFormatting.GREEN + " was sent to your bank account. Your current total balance is " + TextFormatting.GOLD  + "$" + formatBalance(getBalance(player))));
+	}
+	
+	public int getMoneyTypeCountFromArray(int[] moneyCount, ItemMoney item) {
+		if (itemMoney.size() != 14) {
+			init();
+		}
+		
+		return moneyCount[itemMoney.indexOf(item)];
+	}
+
+	public int[] setMoneyTypeCountForArray(int[] moneyCountIn, ItemMoney item, int amount) {
+		if (itemMoney.size() != 14) {
+			init();
+		}
+		
+		moneyCountIn[itemMoney.indexOf(item)] = amount;
+		return moneyCountIn;
+	}
+	
+	public int[] addMoneyTypeCountForArray(int[] moneyCountIn, ItemMoney item, int amount) {
+		if (itemMoney.size() != 14) {
+			init();
+		}
+		
+		moneyCountIn[itemMoney.indexOf(item)] += amount;
+		return moneyCountIn;
+	}
+	
+	public int[] subtractMoneyTypeCountForArray(int[] moneyCountIn, ItemMoney item, int amount) {
+		if (itemMoney.size() != 14) {
+			init();
+		}
+		
+		int index = itemMoney.indexOf(item);
+		moneyCountIn[index] -= amount;
+		if (moneyCountIn[index] < 0) {
+			moneyCountIn[index] = 0;
+		}
+		return moneyCountIn;
 	}
 }

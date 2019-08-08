@@ -1,21 +1,73 @@
 package com.silvaniastudios.econ.api.store;
 
+import javax.annotation.Nonnull;
+
+import com.silvaniastudios.econ.core.FurenikusEconomy;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
-public class TillEntity extends TileEntity {
+public class TillEntity extends TileEntity implements ITickable {
 	
 	BlockPos managerPos;
 	
 	String ownerUuid;
 	String ownerName;
+	String buyerName;
+	String buyerUuid;
+	int buyerCountdownTime;
+	boolean locked;
+	
+	int[] moneyInventory = new int[FurenikusEconomy.utils.itemNotes.size()];
 	
 	public TillEntity() {}
+	
+	public ItemStackHandler inventory = new ItemStackHandler(27) {
+		@Override
+		public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+			return true;
+		}
+		
+		@Override
+		protected void onContentsChanged(int slot) {
+			markDirty();
+		}
+	};
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return true;
+        }
+		return super.hasCapability(capability, facing);
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+		}
+		
+		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public void update() {
+		if (buyerCountdownTime > 0) {
+			buyerCountdownTime--;
+		}
+	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
@@ -26,6 +78,14 @@ public class TillEntity extends TileEntity {
 		nbt.setInteger("manPosX", managerPos.getX());
 		nbt.setInteger("manPosY", managerPos.getX());
 		nbt.setInteger("manPosZ", managerPos.getX());
+		
+		nbt.setTag("items", inventory.serializeNBT());
+		
+		nbt.setString("buyerUuid", buyerUuid);
+		nbt.setString("buyerName", buyerName);
+		nbt.setInteger("buyerCountdownTime", buyerCountdownTime);
+		
+		nbt.setIntArray("moneyInventory", moneyInventory);
 		
 		return nbt;
 	}
@@ -40,6 +100,16 @@ public class TillEntity extends TileEntity {
 		int y = nbt.getInteger("manPosY");
 		int z = nbt.getInteger("manPosZ");
 		managerPos = new BlockPos(x, y, z);
+		
+		if (nbt.hasKey("items")) {
+			inventory.deserializeNBT((NBTTagCompound) nbt.getTag("items"));
+		}
+		
+		buyerUuid = nbt.getString("buyerUuid");
+		buyerName = nbt.getString("buyerName");
+		buyerCountdownTime = nbt.getInteger("buyerCountdownTime");
+		
+		moneyInventory = nbt.getIntArray("moneyInventory");
 	}
 	
 	protected void register(StoreManagerEntity manager) {
@@ -101,5 +171,4 @@ public class TillEntity extends TileEntity {
 		this.readFromNBT(pkt.getNbtCompound());
 		this.getWorld().notifyBlockUpdate(this.pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 	}
-
 }
