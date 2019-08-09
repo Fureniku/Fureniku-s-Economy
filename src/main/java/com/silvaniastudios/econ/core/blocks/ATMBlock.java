@@ -1,17 +1,16 @@
 package com.silvaniastudios.econ.core.blocks;
 
+import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.core.EconItems;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.ItemMoney;
-import com.silvaniastudios.econ.network.ServerBalancePacket;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -48,7 +47,7 @@ public class ATMBlock extends EconBlockBase {
         	} else if (player.getHeldItemMainhand() != null) {
         		if (player.getHeldItemMainhand().getItem() == EconItems.debitCard) {
         			world.playSound(player, pos, atmSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        			FurenikusEconomy.proxy.openGui(0);
+        			FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
         			econ.getBalance(player);                 
         		} else {
         			ItemStack item = player.getHeldItemMainhand();
@@ -62,16 +61,12 @@ public class ATMBlock extends EconBlockBase {
 	        				item.setCount(item.getCount()-1);
         				}
         			} else {
-        				FurenikusEconomy.proxy.openGui(1);
+        				FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
         			}
         		}
         	} else {
-        		FurenikusEconomy.proxy.openGui(1);
+        		FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
         	}
-        
-        	EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        	FurenikusEconomy.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), playerMP); //TODO
-       		System.out.println("Current Balance Packet Sent! Balance: $" + econ.getBalance(player));
        	}
         return true;
     }

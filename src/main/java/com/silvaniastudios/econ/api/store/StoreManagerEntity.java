@@ -161,6 +161,8 @@ public class StoreManagerEntity extends TileEntity {
 		return false;
     }
 	
+	
+	
 	public boolean isLoaded() {
 		return this.hasWorld() && this.hasPosition() ? this.getWorld().isBlockLoaded(this.getPos()) : false;
 	}

@@ -3,12 +3,7 @@ package com.silvaniastudios.econ.core;
 import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.store.StoreManagerContainer;
 import com.silvaniastudios.econ.api.store.StoreManagerEntity;
-import com.silvaniastudios.econ.api.store.old.ContainerFloatingShelves;
-import com.silvaniastudios.econ.api.store.old.ContainerStockChest;
-import com.silvaniastudios.econ.api.store.old.GuiFloatingShelves;
-import com.silvaniastudios.econ.api.store.old.GuiStockChest;
-import com.silvaniastudios.econ.api.store.old.TileEntityFloatingShelves;
-import com.silvaniastudios.econ.api.store.old.TileEntityStockChest;
+import com.silvaniastudios.econ.core.client.gui.GuiATM;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -22,7 +17,7 @@ public class GuiHandler implements IGuiHandler {
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 		if (tileEntity != null) {
-			if (id == EconConstants.GUI.STORE_MANAGER) {
+			if (id == EconConstants.Gui.STORE_MANAGER) {
 				if (tileEntity instanceof StoreManagerEntity) {
 					return new StoreManagerContainer((StoreManagerEntity) tileEntity);
 				}
@@ -35,22 +30,13 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
     	TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
     	if (tileEntity != null) {
-    		if (id == EconConstants.GUI.STORE_MANAGER) {
-    			
+    		if (id == EconConstants.Gui.STORE_MANAGER) {
+    			return new StoreManagerGui(player.inventory, (StoreManagerEntity) tileEntity);
     		}
     	}
-    	switch(id) {
-    		case 1: {
-    			if (tileEntity instanceof TileEntityFloatingShelves) {
-    				return new GuiFloatingShelves(player.inventory, (TileEntityFloatingShelves) tileEntity);
-    			}	
-    		}
-    		case 4: {
-    			if (tileEntity instanceof TileEntityStockChest) {
-    				return new GuiStockChest(player.inventory, (TileEntityStockChest) tileEntity);
-    			}
-    		}
+    	
+    	if (id == EconConstants.Gui.ATM) {
+    		return new GuiATM();
     	}
-    	return null;
     }
 }

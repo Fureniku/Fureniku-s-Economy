@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.core.client.gui.atm;
+package com.silvaniastudios.econ.core.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
@@ -7,11 +7,11 @@ import com.silvaniastudios.econ.core.EconConfig;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.DebitCardItem;
 import com.silvaniastudios.econ.network.ATMWithdrawPacket;
-import com.silvaniastudios.econ.network.ServerBalancePacket;
 import com.silvaniastudios.econ.network.SoundPacket;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
@@ -31,11 +31,6 @@ public class GuiATM extends GuiScreen {
     long withdrawAmount;
     long initBalance;
     
-    private GuiButton button0;
-    private GuiButton button1;
-    private GuiButton button2;
-    private GuiButton button3;
-    
     //GUI Stage changes the current active screen. It enables different features on the buttons, and changes the text.
     //Stage 1 asks for pin and waits for it to be entered.
     //Stage 2 is an options menu, asking for your next move.
@@ -44,47 +39,51 @@ public class GuiATM extends GuiScreen {
     //Stage 5 is the withdraw confirm screen.
     //Stage 6 is the insufficient funds error message.
     //Stage 7 is the Withdraw X Amount screen.
-    //Stage 8+ informs of an invalid selection
+    //Stage 8 is for no valid card found.
+    //Stage 9+ informs of an invalid selection
     
     @Override
     public void initGui() {
-    	System.out.println("initGui");
     	buttonList.clear();
     	int guiLeft = width / 2;
     	int guiTop = height / 2;
-    	FurenikusEconomy.network.sendToServer(new SoundPacket("flenixcities:cardInsert"));
-    	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7")); // 7
-    	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8")); // 8
-    	buttonList.add(new ATMButton(3, guiLeft + 85, guiTop + 109, 24, 15, "9")); // 9
-    	buttonList.add(new RedButton(4, guiLeft + 121, guiTop + 109, 24, 15, "")); // Cancel
-    	buttonList.add(new ATMButton(5, guiLeft + 21, guiTop + 133, 24, 15, "4")); // 4
-    	buttonList.add(new ATMButton(6, guiLeft + 53, guiTop + 133, 24, 15, "5")); // 5
-    	buttonList.add(new ATMButton(7, guiLeft + 85, guiTop + 133, 24, 15, "6")); // 6
-    	buttonList.add(new YellowButton(8, guiLeft + 121, guiTop + 133, 24, 15, "")); // Clear
-    	buttonList.add(button1 = new ATMButton(9, guiLeft + 21, guiTop + 157, 24, 15, "1")); // 1
-    	buttonList.add(button2 = new ATMButton(10, guiLeft + 53, guiTop + 157, 24, 15, "2")); // 2
-    	buttonList.add(button3 = new ATMButton(11, guiLeft + 85, guiTop + 157, 24, 15, "3")); // 3
-    	buttonList.add(new GreenButton(12, guiLeft + 121, guiTop + 157, 24, 15, "")); // Confirm
-    	buttonList.add(button0 = new ATMButton(13, guiLeft + 53, guiTop + 181, 24, 15, "0")); // 0
+    	FurenikusEconomy.network.sendToServer(new SoundPacket(FurenikusEconomy.MODID + ":cardInsert"));
+    	buttonList.add(new ATMButton(1, guiLeft + 21, guiTop + 109, 24, 15, "7", 0)); // 7
+    	buttonList.add(new ATMButton(2, guiLeft + 53, guiTop + 109, 24, 15, "8", 0)); // 8
+    	buttonList.add(new ATMButton(3, guiLeft + 85, guiTop + 109, 24, 15, "9", 0)); // 9
+    	buttonList.add(new ATMButton(4, guiLeft + 121, guiTop + 109, 24, 15, "", 96)); // Cancel
+    	buttonList.add(new ATMButton(5, guiLeft + 21, guiTop + 133, 24, 15, "4", 0)); // 4
+    	buttonList.add(new ATMButton(6, guiLeft + 53, guiTop + 133, 24, 15, "5", 0)); // 5
+    	buttonList.add(new ATMButton(7, guiLeft + 85, guiTop + 133, 24, 15, "6", 0)); // 6
+    	buttonList.add(new ATMButton(8, guiLeft + 121, guiTop + 133, 24, 15, "", 120)); // Clear
+    	buttonList.add(new ATMButton(9, guiLeft + 21, guiTop + 157, 24, 15, "1", 0)); // 1
+    	buttonList.add(new ATMButton(10, guiLeft + 53, guiTop + 157, 24, 15, "2", 0)); // 2
+    	buttonList.add(new ATMButton(11, guiLeft + 85, guiTop + 157, 24, 15, "3", 0)); // 3
+    	buttonList.add(new ATMButton(12, guiLeft + 121, guiTop + 157, 24, 15, "", 72)); // Confirm
+    	buttonList.add(new ATMButton(13, guiLeft + 53, guiTop + 181, 24, 15, "0", 0)); // 0
     	
-    	buttonList.add(new ATMButtonLeft(14, guiLeft - 21, guiTop - 7, 24, 15, "")); //Top-Left
-    	buttonList.add(new ATMButtonLeft(16, guiLeft - 21, guiTop + 20, 24, 15, "")); //Mid-Upper Left
-    	buttonList.add(new ATMButtonLeft(18, guiLeft - 21, guiTop + 47, 24, 15, "")); //Mid-Lower Left
-    	buttonList.add(new ATMButtonLeft(20, guiLeft - 21, guiTop + 74, 24, 15, "")); //Bottom Left
+    	buttonList.add(new ATMButton(14, guiLeft - 21, guiTop - 7, 24, 15, "", 48)); //Top-Left
+    	buttonList.add(new ATMButton(16, guiLeft - 21, guiTop + 20, 24, 15, "", 48)); //Mid-Upper Left
+    	buttonList.add(new ATMButton(18, guiLeft - 21, guiTop + 47, 24, 15, "", 48)); //Mid-Lower Left
+    	buttonList.add(new ATMButton(20, guiLeft - 21, guiTop + 74, 24, 15, "", 48)); //Bottom Left
     	
-    	buttonList.add(new ATMButtonRight(15, guiLeft + 173, guiTop - 7, 24, 15, "")); //Top-Right
-    	buttonList.add(new ATMButtonRight(17, guiLeft + 173, guiTop + 20, 24, 15, "")); //Mid-Upper Right
-    	buttonList.add(new ATMButtonRight(19, guiLeft + 173, guiTop + 47, 24, 15, "")); //Mid-Lower Right
-    	buttonList.add(new ATMButtonRight(21, guiLeft + 173, guiTop + 74, 24, 15, "")); //Bottom Right
+    	buttonList.add(new ATMButton(15, guiLeft + 173, guiTop - 7, 24, 15, "", 24)); //Top-Right
+    	buttonList.add(new ATMButton(17, guiLeft + 173, guiTop + 20, 24, 15, "", 24)); //Mid-Upper Right
+    	buttonList.add(new ATMButton(19, guiLeft + 173, guiTop + 47, 24, 15, "", 24)); //Mid-Lower Right
+    	buttonList.add(new ATMButton(21, guiLeft + 173, guiTop + 74, 24, 15, "", 24)); //Bottom Right
+    	
+    	if (!econ.hasOwnCard(Minecraft.getMinecraft().player)) {
+    		guiStage = 8;
+    	}
     }
     
     public void actionPerformed(GuiButton guibutton) {
-    	initBalance = econ.parseLong(ServerBalancePacket.balanceAmount);
+    	initBalance = econ.getBalance(Minecraft.getMinecraft().player);
     	FurenikusEconomy.log(2, "Balance available in GUI! Balance: $" + initBalance);
     	//Plays the sound, and while it's at it also updates client balance.
     	//Updating the balance on every button press means withdrawls etc will update the balance, and makes it effectively bulletproof
     	//against latency issues.
-    	FurenikusEconomy.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
+    	FurenikusEconomy.network.sendToServer(new SoundPacket(FurenikusEconomy.MODID + ":atmButton"));
     	if (guiStage == 1) {
     		switch(guibutton.id) {
 	    	case 1:
@@ -214,7 +213,7 @@ public class GuiATM extends GuiScreen {
     	}
     	
     	if (guiStage == 5) {
-    		FurenikusEconomy.network.sendToServer(new SoundPacket("flenixcities:atmButton"));
+    		FurenikusEconomy.network.sendToServer(new SoundPacket(FurenikusEconomy.MODID + ":atmButton"));
     		switch(guibutton.id) {
     		case 4:
     			guiStage = 1;
@@ -448,13 +447,8 @@ public class GuiATM extends GuiScreen {
         int right = 28;
         int up = -88;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        
-        button0.drawButton(mc, mouseX, mouseY, partialTicks);
-        button1.drawButton(mc, mouseX, mouseY, partialTicks);
-        button2.drawButton(mc, mouseX, mouseY, partialTicks);
-        button3.drawButton(mc, mouseX, mouseY, partialTicks);
     	
-    	fontRenderer.drawString("ATM", x-21, x-30, 0x404040);
+    	fontRenderer.drawString("ATM", -21, -30, 0x404040);
     	String bal = econ.formatBalance(initBalance);
     	String shortAmt = econ.formatBalance(withdrawAmount - initBalance);
     	String underScore = "";
@@ -469,10 +463,9 @@ public class GuiATM extends GuiScreen {
     	}
     	
     	if (guiStage == 1) {
-	    	fontRenderer.drawString("ATM", x-21+right, x-30+up, 0x404040);
-	    	fontRenderer.drawString("Welcome!", x+68+right, x-2+up, 0x007F0E);
-	    	fontRenderer.drawString("Please enter your PIN,", x+32+right, x+8+up, 0x007F0E);
-	    	fontRenderer.drawString("followed by 'Confirm'", x+37+right, x+18+up, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Welcome!", 116, -2, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Please enter your PIN,", 116, 8, 0x007F0E);
+    		drawCenteredString(fontRenderer, "followed by 'Confirm'", 116, 18, 0x007F0E);
 	    	String maskedPin = "****";
     		if (enteredPin.length() == 0) {
     			maskedPin = underScore;
@@ -483,24 +476,22 @@ public class GuiATM extends GuiScreen {
     		} else if (enteredPin.length() == 3) {
     			maskedPin = "***" + underScore;
     		}
-    		fontRenderer.drawString(maskedPin, 78, 48, 0x007F0E);
+    		drawCenteredString(fontRenderer, maskedPin, 116, 48, 0x007F0E);
 	    	if (pinAttempt == 4) {
-		    	fontRenderer.drawString("Attempt 3 of 3.", 52, 68, 0x007F0E);
-	    		fontRenderer.drawString("Card declined!", 53, 78, 0x7F0000);
+	    		drawCenteredString(fontRenderer, "Attempt 3 of 3.", 116, 68, 0x007F0E);
+	    		drawCenteredString(fontRenderer, "Card declined!", 116, 78, 0x7F0000);
 	    	} else {
-	    		fontRenderer.drawString("Attempt " + pinAttempt + " of 3.", x+52, x+68, 0x007F0E);
+	    		drawCenteredString(fontRenderer, "Attempt " + pinAttempt + " of 3.", 116, 68, 0x007F0E);
 	    	}
     	}
     	if (guiStage == 2) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
         	fontRenderer.drawString("Withdraw", 12, -3, 0x007F0E);
         	fontRenderer.drawString("Balance", 126, -3, 0x007F0E);
         	fontRenderer.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
     	if (guiStage == 3) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please select the amount", 26, -12, 0xFFD800);
-	    	fontRenderer.drawString("you wish to withdraw.", 37, -2, 0xFFD800);
+    		drawCenteredString(fontRenderer, "Please select the amount", 116, -12, 0xFFD800);
+    		drawCenteredString(fontRenderer, "you wish to withdraw.", 116, -2, 0xFFD800);
         	fontRenderer.drawString("10", 12, 24, 0x007F0E);
         	fontRenderer.drawString("50", 12, 51, 0x007F0E);
         	fontRenderer.drawString("250", 12, 78, 0x007F0E);
@@ -509,43 +500,45 @@ public class GuiATM extends GuiScreen {
         	fontRenderer.drawString("Input Amount", 100, 78, 0x007F0E);
     	}
     	if (guiStage == 4) {
-    		fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Your current balance is: ", 26, 8, 0x007F0E);
-    		fontRenderer.drawString(bal, 26, 18, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Your current balance is: ", 116, 8, 0x007F0E);
+    		drawCenteredString(fontRenderer, bal, 116, 18, 0x007F0E);
         	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
     	}
     	if (guiStage == 5) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Withdrawl Successful!", 35, 8, 0x007F0E);
-    		fontRenderer.drawString("You have withdrawn", 39, 18, 0x007F0E);
-    		fontRenderer.drawString(EconConfig.currencySign + econ.formatBalance(withdrawAmount), 50, 28, 0x007F0E);
-    		fontRenderer.drawString("Press Confirm to continue.", 22, 58, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Withdrawl Successful!", 116, 8, 0x007F0E);
+    		drawCenteredString(fontRenderer, "You have withdrawn", 116, 18, 0x007F0E);
+    		drawCenteredString(fontRenderer, EconConfig.currencySign + econ.formatBalance(withdrawAmount), 116, 28, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Press Confirm to continue.", 116, 58, 0x007F0E);
 
     	}
     	if (guiStage == 6) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Insufficient Funds!", 41, -2, 0x7F0000);
-    		fontRenderer.drawString("$" + shortAmt + " more needed!", 43, 8, 0x7F0000);
+    		drawCenteredString(fontRenderer, "Insufficient Funds!", 116, -2, 0x7F0000);
+    		drawCenteredString(fontRenderer, shortAmt + " more needed!", 116, 8, 0x7F0000);
     		fontRenderer.drawString("Withdraw Less", 97, 24, 0x007F0E);
     		fontRenderer.drawString("Return to Menu", 90, 51, 0x007F0E);
         	fontRenderer.drawString("Eject Card", 109, 78, 0x007F0E);
     	}
     	if (guiStage == 7) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("Please enter the amount", 26, -12, 0xFFD800);
-    		fontRenderer.drawString("you wish to withdraw:", 37, -2, 0xFFD800);
-    		fontRenderer.drawString("$" + withdrawCustom, 72, 24, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Please enter the amount", 116, -12, 0xFFD800);
+    		drawCenteredString(fontRenderer, "you wish to withdraw:", 116, -2, 0xFFD800);
+    		drawCenteredString(fontRenderer, EconConfig.currencySign + withdrawCustom, 116, 24, 0x007F0E);
         	fontRenderer.drawString("Back", 12, 78, 0x007F0E);
     	}
-    	if (guiStage >= 8) {
-        	fontRenderer.drawString("ATM", -21, -30, 0x404040);
-    		fontRenderer.drawString("   Invalid Selection    ", 26, -12, 0xFFD800);
-        	fontRenderer.drawString("Main Menu", 12, 24, 0x007F0E);
+    	if (guiStage == 8) {
+    		drawCenteredString(fontRenderer, "Welcome!", 116, -2, 0x007F0E);
+    		drawCenteredString(fontRenderer, "Please insert your card.", 116, 8, 0x007F0E);
+    	}
+    	if (guiStage >= 9) {
+    		drawCenteredString(fontRenderer, "Invalid Selection", 116, -12, 0xFFD800);
+        	drawCenteredString(fontRenderer, "Main Menu", 116, 24, 0x007F0E);
     	}
     }
     
     @Override
     public void onGuiClosed() {
-    	System.out.println("Closed GUI!");
+    }
+    
+    public void drawCenteredString(FontRenderer fontRenderer, String text, int x, int y, int color) {
+        fontRenderer.drawString(text, (x - fontRenderer.getStringWidth(text) / 2), y, color);
     }
 }

@@ -2,7 +2,7 @@ package com.silvaniastudios.econ.core.client;
 
 import com.silvaniastudios.econ.core.CommonProxy;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
-import com.silvaniastudios.econ.core.client.gui.atm.GuiATM;
+import com.silvaniastudios.econ.core.client.gui.GuiATM;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

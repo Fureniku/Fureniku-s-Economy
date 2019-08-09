@@ -5,7 +5,6 @@ import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -43,7 +42,6 @@ public class ATMWithdrawPacket implements IMessage {
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
 			econ.withdrawFunds(message.withdrawAmount, player);
-			FurenikusEconomy.network.sendTo(new ServerBalancePacket(""+econ.getBalance(player)), (EntityPlayerMP) player);
 			FurenikusEconomy.log(3, "[Network] " + String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().player.getDisplayName()));
 			return null;
 		}
