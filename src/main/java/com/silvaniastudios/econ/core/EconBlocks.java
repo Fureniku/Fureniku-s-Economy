@@ -1,12 +1,14 @@
 package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.core.blocks.ATMBlock;
+import com.silvaniastudios.econ.core.blocks.ATMEntity;
 import com.silvaniastudios.econ.core.items.CitiesItemBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -26,6 +28,11 @@ public class EconBlocks {
 	
 	public static void registerModels() {
 		atm_block.initModel();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void registerTileEntities() {
+		GameRegistry.registerTileEntity(ATMEntity.class, FurenikusEconomy.MODID + ":atm");
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ATMButton extends GuiButton {
 
-    protected static final ResourceLocation textureRed = new ResourceLocation(FurenikusEconomy.MODID, "textures/gui/atmbutton.png");
+    protected static final ResourceLocation TEXTURES = new ResourceLocation(FurenikusEconomy.MODID, "textures/gui/atmbutton.png");
     int buttonTextureX = 0;
 
     public ATMButton(int par1, int par2, int par3, int par4, int par5, String par6Str, int buttonTex) {
@@ -25,14 +25,14 @@ public class ATMButton extends GuiButton {
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if (this.visible) {
             FontRenderer fontrenderer = mc.fontRenderer;
-            mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
+            mc.getTextureManager().bindTexture(TEXTURES);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             int i = this.getHoverState(this.hovered);
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            this.drawTexturedModalRect(this.x, this.y, buttonTextureX, i * 15, 24, 15);
+            this.drawTexturedModalRect(this.x, this.y, buttonTextureX, i * 15, 20, 15);
             this.mouseDragged(mc, mouseX, mouseY);
             int j = 14737632;
 

@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.silvaniastudios.econ.core.EconItems;
+import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,7 +24,7 @@ public class DebitCardItem extends EconItemBase {
 
 	public DebitCardItem(String name) {
 		super(name, 1);
-		//this.setCreativeTab(FurenikusCities.tabEcon);
+		this.setCreativeTab(FurenikusEconomy.tabEcon);
 	}
 		
 	@Override

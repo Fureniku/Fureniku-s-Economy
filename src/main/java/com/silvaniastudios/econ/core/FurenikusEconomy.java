@@ -106,6 +106,7 @@ public class FurenikusEconomy {
 		@SubscribeEvent
 		public static void registerBlocks(RegistryEvent.Register<Block> event) {
 			EconBlocks.register(event.getRegistry());
+			EconBlocks.registerTileEntities();
 		}
 	}
     

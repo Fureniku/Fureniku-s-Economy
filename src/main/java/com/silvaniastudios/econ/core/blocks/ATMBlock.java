@@ -12,6 +12,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -41,35 +42,40 @@ public class ATMBlock extends EconBlockBase {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    	ItemStack item = player.getHeldItemMainhand();
         if (!world.isRemote) {
         	if (player.isSneaking()) {
         		econ.depositAllCash(player);
         	} else if (player.getHeldItemMainhand() != null) {
-        		if (player.getHeldItemMainhand().getItem() == EconItems.debitCard) {
-        			world.playSound(player, pos, atmSound, SoundCategory.BLOCKS, 1.0F, 1.0F);
-        			FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
-        			econ.getBalance(player);                 
-        		} else {
-        			ItemStack item = player.getHeldItemMainhand();
+    			if (item.getItem() instanceof ItemMoney) {
+    				ItemMoney money = (ItemMoney) item.getItem();
+    				if (econ.addMoney(player, money.moneyValue)) {
+        				player.sendMessage(new TextComponentString(TextFormatting.GOLD + econ.formatBalance(money.getMoneyValue()) + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + econ.formatBalance(econ.getBalance(player))));
+        				player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!"));
 
-        			if (item.getItem() instanceof ItemMoney) {
-        				ItemMoney money = (ItemMoney) item.getItem();
-        				if (econ.addMoney(player, money.moneyValue)) {
-	        				player.sendMessage(new TextComponentString(TextFormatting.GOLD + econ.formatBalance(money.getMoneyValue()) + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + econ.formatBalance(econ.getBalance(player))));
-	        				player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!"));
-	
-	        				item.setCount(item.getCount()-1);
-        				}
-        			} else {
-        				FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
-        			}
+        				item.setCount(item.getCount()-1);
+    				}
         		}
-        	} else {
-        		FurenikusEconomy.proxy.openGui(EconConstants.Gui.ATM);
         	}
        	}
+        
+        if (!(item.getItem() instanceof ItemMoney)) {
+        	player.openGui(FurenikusEconomy.instance, EconConstants.Gui.ATM, world, pos.getX(), pos.getY(), pos.getZ());
+        }
         return true;
     }
+    
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+    	System.out.println("Checking for TE");
+    	return true;
+    }
+    
+    @Override
+	public TileEntity createTileEntity(World worldIn, IBlockState state) {
+    	System.out.println("Creating TE.");
+		return new ATMEntity();
+	}
 		
 	public boolean renderAsNormalBlock() {
 		return false;
