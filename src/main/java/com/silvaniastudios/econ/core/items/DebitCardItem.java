@@ -83,7 +83,7 @@ public class DebitCardItem extends EconItemBase {
 	
 	public static String checkCardPin(EntityPlayer player) {
 		ItemStack held = player.inventory.getCurrentItem();
-		if (held.getItem() != EconItems.debitCard) {
+		if (held.getItem() != EconItems.debit_card) {
 			return "";
 		}
 		
@@ -103,7 +103,7 @@ public class DebitCardItem extends EconItemBase {
 	
 	public static String checkCardOwner(EntityPlayer player, ItemStack held) {
 		if (held != null) {
-			if (held.getItem() == EconItems.debitCard) {
+			if (held.getItem() == EconItems.debit_card) {
 				return held.getTagCompound().getString("playerUUID");
 			}
 		}

@@ -35,21 +35,22 @@ public class StoreManagerEntity extends TileEntity implements ITickable {
 	public ArrayList<Integer> registeredCartDispenserIds = new ArrayList<>();
 	public ArrayList<BlockPos> cartDispenserPosArray = new ArrayList<>();
 	
-	public String ownerName;
-	public String ownerUuid;
-	public String shopName;
+	public String ownerName = "";
+	public String ownerUuid = "";
+	public String shopName = "";
 	
 	public ArrayList<String> activeCustomerUuids = new ArrayList<>();
 	public ArrayList<Integer> activeCustomerTimers = new ArrayList<>();
 	public ArrayList<String> bannedCustomerUuids = new ArrayList<>();
 	
-	public long balance;
+	public long balance = 0;
 	
 	public boolean closed;
 	
 	public StoreManagerEntity() {}
 	
-	public void readNBT(NBTTagCompound nbt) {
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
 		registeredShopIds.clear();
 		shopPosArray.clear();
 		registeredStockIds.clear();
@@ -102,7 +103,9 @@ public class StoreManagerEntity extends TileEntity implements ITickable {
 		}
 	}
 	
-	public NBTTagCompound writeNBT(NBTTagCompound nbt) {
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		System.out.println("Start write NBT");
 		nbt.setString("ownerName", ownerName);
 		nbt.setString("ownerUuid", ownerUuid);
 		nbt.setString("shopName", shopName);
@@ -152,7 +155,7 @@ public class StoreManagerEntity extends TileEntity implements ITickable {
 		nbt.setTag("stock", stockList);
 		nbt.setTag("tills", tillList);
 		nbt.setTag("cartDispenser", cartDispenserList);
-
+		System.out.println("End write NBT");
 		return nbt;
 	}
 	

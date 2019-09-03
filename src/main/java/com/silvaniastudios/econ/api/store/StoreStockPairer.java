@@ -3,11 +3,11 @@ package com.silvaniastudios.econ.api.store;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseEntity;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
+import com.silvaniastudios.econ.core.items.EconItemBase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,10 +17,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class StoreStockPairer extends Item {
+public class StoreStockPairer extends EconItemBase {
 	
-	public StoreStockPairer() {
-		super();
+	public StoreStockPairer(String name) {
+		super(name, 1);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(FurenikusEconomy.tabEcon);
 	}

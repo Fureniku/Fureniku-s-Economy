@@ -365,7 +365,7 @@ public class EconUtils {
 			long cardBalance = getBalance(player);
 			
 			long totalBalance = invBalance + cardBalance;
-			if (player.inventory.hasItemStack(new ItemStack(EconItems.debitCard))) {
+			if (player.inventory.hasItemStack(new ItemStack(EconItems.debit_card))) {
 				if (invBalance < value) {
 					if (totalBalance >= value) {
 						long payAmount = value - invBalance;
@@ -453,7 +453,7 @@ public class EconUtils {
 		for (int i = player.inventory.getSizeInventory() - 1; i >= 0; -- i) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == EconItems.debitCard) {
+				if (stack.getItem() == EconItems.debit_card) {
 					if (player.getUniqueID().toString().equals(stack.getTagCompound().getString("playerUUID"))) {
 						return true;
 					}

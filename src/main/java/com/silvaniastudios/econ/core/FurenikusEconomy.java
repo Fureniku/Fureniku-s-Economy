@@ -55,7 +55,7 @@ public class FurenikusEconomy {
 	@EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	CapabilityManager.INSTANCE.register(ICurrency.class, new CurrencyStorage(), CurrencyCapability.class);
-    	CapabilityManager.INSTANCE.register(ICart.class, new CartStorage(),  CartCapability.class);
+    	//CapabilityManager.INSTANCE.register(ICart.class, new CartStorage(),  CartCapability.class);
     	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FurenikusEconomy");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side

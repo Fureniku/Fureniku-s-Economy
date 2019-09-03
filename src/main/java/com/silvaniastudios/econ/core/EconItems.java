@@ -1,6 +1,7 @@
 package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.core.items.EconItemBase;
+import com.silvaniastudios.econ.api.store.StoreStockPairer;
 import com.silvaniastudios.econ.core.items.DebitCardItem;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 
@@ -23,11 +24,8 @@ public class EconItems {
 	public static ItemMoney note5000 = new ItemMoney(5000, "note5000");
 	public static ItemMoney note10000 = new ItemMoney(10000, "note10000");
 
-	public static DebitCardItem debitCard = new DebitCardItem("debitCard");
-	//public static Item storeStockPairer = new StoreStockPairer().setUnlocalizedName("storeStockPairer");
-	
-	//public static Item bankerSpawner = new BankerSpawnerItem().setUnlocalizedName("bankerSpawnerItem");
-	//public static Item pliers = new PliersItem().setUnlocalizedName("pliers");
+	public static DebitCardItem debit_card = new DebitCardItem("debit_card");
+	public static StoreStockPairer store_stock_pairer = new StoreStockPairer("store_stock_pairer");
 	
 	public static EconItemBase plastic = new EconItemBase("plastic", 64);
 	public static EconItemBase raw_plastic = new EconItemBase("raw_plastic", 64);
@@ -56,7 +54,8 @@ public class EconItems {
 				note2000,
 				note5000,
 				note10000,
-				debitCard,
+				debit_card,
+				store_stock_pairer,
 				plastic,
 				raw_plastic,
 				small_pcb,
@@ -83,7 +82,8 @@ public class EconItems {
 		note2000.registerItemModel();
 		note5000.registerItemModel();
 		note10000.registerItemModel();
-		debitCard.registerItemModel();
+		debit_card.registerItemModel();
+		store_stock_pairer.registerItemModel();
 		plastic.registerItemModel();
 		raw_plastic.registerItemModel();
 		small_pcb.registerItemModel();

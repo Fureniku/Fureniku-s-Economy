@@ -6,6 +6,7 @@ import com.silvaniastudios.econ.core.blocks.EconBlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -25,16 +26,24 @@ public class StoreManagerBlock extends EconBlockBase {
 	
 	@Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		System.out.println("Calling onBlockActivated (side is " + world.isRemote + ").");
         if (!world.isRemote) {
         	TileEntity te = world.getTileEntity(pos);
         	if (te != null && te instanceof StoreManagerEntity) {
         		StoreManagerEntity entity = (StoreManagerEntity) te;
+        		
+        		if (entity.ownerUuid.isEmpty()) {
+        			entity.ownerUuid = player.getCachedUniqueIdString();
+        			entity.ownerName = player.getDisplayName().getFormattedText();
+        			System.out.println("Registered placer");
+        		}
         		
         		if (player.getUniqueID().toString().equalsIgnoreCase(entity.ownerUuid)) {
         			//Owner code
         			return true;
         		} else {
         			player.sendMessage(new TextComponentString(I18n.format("econ.shop.not_owner")));
+        			player.sendMessage(new TextComponentString("Side: " + world.isRemote));
         			return false;
         		}
         	}
