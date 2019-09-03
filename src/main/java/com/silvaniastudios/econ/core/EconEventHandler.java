@@ -23,7 +23,7 @@ public class EconEventHandler {
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
-		String uuid = EntityPlayer.getUUID(player.getGameProfile()).toString();
+		//String uuid = EntityPlayer.getUUID(player.getGameProfile()).toString();
 		player.sendMessage(new TextComponentString(TextFormatting.GOLD + "You have logged in! There may or may not be completed transactions."));
 	}
 

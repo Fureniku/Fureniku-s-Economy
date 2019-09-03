@@ -2,6 +2,9 @@ package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.api.capability.CapabilityEventHandler;
+import com.silvaniastudios.econ.api.capability.cart.CartCapability;
+import com.silvaniastudios.econ.api.capability.cart.CartStorage;
+import com.silvaniastudios.econ.api.capability.cart.ICart;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyCapability;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyStorage;
 import com.silvaniastudios.econ.api.capability.currency.ICurrency;
@@ -52,6 +55,7 @@ public class FurenikusEconomy {
 	@EventHandler
     public void preInit(FMLPreInitializationEvent event) {
     	CapabilityManager.INSTANCE.register(ICurrency.class, new CurrencyStorage(), CurrencyCapability.class);
+    	CapabilityManager.INSTANCE.register(ICart.class, new CartStorage(),  CartCapability.class);
     	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FurenikusEconomy");
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side

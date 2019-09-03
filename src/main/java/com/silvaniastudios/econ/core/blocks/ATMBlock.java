@@ -2,7 +2,6 @@ package com.silvaniastudios.econ.core.blocks;
 
 import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.EconUtils;
-import com.silvaniastudios.econ.core.EconItems;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 
@@ -17,7 +16,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -67,13 +65,11 @@ public class ATMBlock extends EconBlockBase {
     
     @Override
     public boolean hasTileEntity(IBlockState state) {
-    	System.out.println("Checking for TE");
     	return true;
     }
     
     @Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    	System.out.println("Creating TE.");
 		return new ATMEntity();
 	}
 		

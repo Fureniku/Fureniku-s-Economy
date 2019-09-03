@@ -2,6 +2,7 @@ package com.silvaniastudios.econ.network;
 
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
+import com.silvaniastudios.econ.core.blocks.ATMContainer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +42,12 @@ public class ATMWithdrawPacket implements IMessage {
 		@Override
 		public IMessage onMessage(ATMWithdrawPacket message, MessageContext ctx) {
 			EntityPlayer player = (EntityPlayer) ctx.getServerHandler().player;
+			if (player.openContainer instanceof ATMContainer) {
+				ATMContainer ctr = (ATMContainer) player.openContainer;
+				ctr.tileEntity.withdraw(player, message.withdrawAmount);
+			}
+			
+			
 			econ.withdrawFunds(message.withdrawAmount, player);
 			FurenikusEconomy.log(3, "[Network] " + String.format("Received %s from %s", message.withdrawAmount, ctx.getServerHandler().player.getDisplayName()));
 			return null;

@@ -511,20 +511,6 @@ public class GuiATM extends GuiContainer {
 		}
     }
     
-    @Override
-    public void updateScreen() {
-    	/*button0.visible = true;
-    	button1.visible = true;
-    	button2.visible = true;
-    	button3.visible = true;
-    	button4.visible = true;
-    	button5.visible = true;
-    	button6.visible = true;
-    	button7.visible = true;
-    	button8.visible = true;
-    	button9.visible = true;*/
-    }
-    
     private void withdrawFunds(long amt) {
 		if (initBalance >= withdrawAmount) {
 			guiStage = 5;

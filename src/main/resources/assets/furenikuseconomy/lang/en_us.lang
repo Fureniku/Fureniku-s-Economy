@@ -29,3 +29,16 @@ itemGroup.tabEcon=FlenixCities Economy
 
 econ.tooltip.shops.floating_shelves.1=Holds up to four types of stock.
 econ.tooltip.shops.floating_shelves.2=Must be paired to a Store Manager.
+
+econ.shop.not_owner=You do not own this shop.
+econ.shop.open_cart=You have started a cart at %s. Press %s to view your cart.
+econ.shop.closed=This shop is currently closed.
+
+econ.shop.customer.cart_closing_inactive=Your cart will close in 30 seconds due to inactivity.
+econ.shop.customer.cart_closed_inactive=Your cart has closed due to inactivity.
+econ.shop.customer.cart_closed_forced=Your cart at %s has been closed by the shop owner.
+econ.shop.customer.cart_closed_death=Your cart at %s has been closed due to your untimely demise.
+econ.shop.customer.cart_closing_distance=You are travelling too far from %s, your cart will close soon.
+econ.shop.customer.cart_closed_distance=Your cart at %s has been closed due to being too far away.
+econ.shop.customer.cart_closed_logout=Your cart at %s has been closed as you're offline. Not that you can see this anyway...
+econ.shop.customer.cart_closed_another_store=Your cart at %s has been closed due to you using another store.

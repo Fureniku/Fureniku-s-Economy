@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store.old;
+/*package com.silvaniastudios.econ.api.store.old;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -520,4 +520,4 @@ public class GuiFloatingShelves extends GuiContainer {
 		}
 		return false;
 	}
-}
+}*/

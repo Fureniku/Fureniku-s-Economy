@@ -53,6 +53,12 @@ public class ATMContainer extends Container {
 	}
 	
 	@Override
+	public void onContainerClosed(EntityPlayer player) {
+		tileEntity.dropAllSlots();
+		super.onContainerClosed(player);
+	}
+	
+	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(slotId);

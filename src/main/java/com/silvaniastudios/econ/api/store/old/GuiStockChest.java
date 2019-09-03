@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store.old;
+/*package com.silvaniastudios.econ.api.store.old;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -110,4 +110,4 @@ public class GuiStockChest extends GuiContainer {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
-}
+}*/
