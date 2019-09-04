@@ -1,7 +1,8 @@
-package com.silvaniastudios.econ.api.store;
+package com.silvaniastudios.econ.api.store.management;
 
 import javax.annotation.Nonnull;
 
+import com.silvaniastudios.econ.api.store.StoreEntityBase;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import net.minecraft.item.ItemStack;

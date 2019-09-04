@@ -1,8 +1,8 @@
 package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.api.EconConstants;
-import com.silvaniastudios.econ.api.store.StoreManagerContainer;
-import com.silvaniastudios.econ.api.store.StoreManagerEntity;
+import com.silvaniastudios.econ.api.store.management.StoreManagerContainer;
+import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 import com.silvaniastudios.econ.core.blocks.ATMContainer;
 import com.silvaniastudios.econ.core.blocks.ATMEntity;
 import com.silvaniastudios.econ.core.client.gui.GuiATM;

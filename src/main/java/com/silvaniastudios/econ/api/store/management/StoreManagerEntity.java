@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store;
+package com.silvaniastudios.econ.api.store.management;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.silvaniastudios.econ.api.capability.cart.CartProvider;
 import com.silvaniastudios.econ.api.capability.cart.ICart;
 import com.silvaniastudios.econ.core.EconConfig;
+import com.silvaniastudios.econ.core.FurenikusEconomy;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -19,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 public class StoreManagerEntity extends TileEntity implements ITickable {
@@ -157,6 +159,24 @@ public class StoreManagerEntity extends TileEntity implements ITickable {
 		nbt.setTag("cartDispenser", cartDispenserList);
 		System.out.println("End write NBT");
 		return nbt;
+	}
+	
+	/**
+	 * Returns the name of the owner of this block. If the owner is online, and has changed their Minecraft name since the block was placed,
+	 * this will also update their name in the block.
+	 * @param world
+	 * @return The owner name
+	 */
+	public String getOwnerName(World world) {
+		EntityPlayer ownerPlayer = world.getPlayerEntityByUUID(UUID.fromString(ownerUuid));
+		if (ownerPlayer != null) {
+			String name = ownerPlayer.getDisplayName().getFormattedText();
+			if (name != ownerName) {
+				FurenikusEconomy.log(0, ownerName + " has changed their Minecraft name to " + name + ". Updating...");
+				ownerName = name;
+			}
+		}
+		return ownerName;
 	}
 	
 	public void addShopToManager(BlockPos pos) {

@@ -1,7 +1,7 @@
 package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.core.items.EconItemBase;
-import com.silvaniastudios.econ.api.store.StoreStockPairer;
+import com.silvaniastudios.econ.api.store.management.StoreStockPairer;
 import com.silvaniastudios.econ.core.items.DebitCardItem;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 

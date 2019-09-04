@@ -1,6 +1,7 @@
 package com.silvaniastudios.econ.api.store;
 
 import com.silvaniastudios.econ.api.EconUtils;
+import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,10 +13,10 @@ import net.minecraft.util.math.BlockPos;
 
 public class StoreEntityBase extends TileEntity {
 	
-	BlockPos managerPos;
+	public BlockPos managerPos;
 	
-	String ownerUuid;
-	String ownerName;
+	public String ownerUuid;
+	public String ownerName;
 	
 	int[] priceList;
 	

@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store;
+package com.silvaniastudios.econ.api.store.management;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

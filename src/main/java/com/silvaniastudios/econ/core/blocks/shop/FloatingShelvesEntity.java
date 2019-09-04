@@ -1,11 +1,8 @@
 package com.silvaniastudios.econ.core.blocks.shop;
 
-import javax.annotation.Nonnull;
-
 import com.silvaniastudios.econ.api.store.shops.ShopBaseEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -15,19 +12,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class FloatingShelvesEntity extends ShopBaseEntity implements ICapabilityProvider  {
 	
-	public FloatingShelvesEntity() {}
-	
-	public ItemStackHandler inventory = new ItemStackHandler(4) {
-		@Override
-		public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-			return true;
-		}
-		
-		@Override
-		protected void onContentsChanged(int slot) {
-			markDirty();
-		}
-	};
+	public FloatingShelvesEntity() {
+		super(4);
+	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

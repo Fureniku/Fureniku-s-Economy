@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store;
+package com.silvaniastudios.econ.api.store.management;
 
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseEntity;

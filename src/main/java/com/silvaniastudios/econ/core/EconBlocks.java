@@ -1,11 +1,11 @@
 package com.silvaniastudios.econ.core;
 
-import com.silvaniastudios.econ.api.store.CartDispenserBlock;
-import com.silvaniastudios.econ.api.store.CartDispenserEntity;
-import com.silvaniastudios.econ.api.store.StockChestBlock;
-import com.silvaniastudios.econ.api.store.StoreManagerBlock;
-import com.silvaniastudios.econ.api.store.StoreManagerEntity;
-import com.silvaniastudios.econ.api.store.TillBlock;
+import com.silvaniastudios.econ.api.store.management.CartDispenserBlock;
+import com.silvaniastudios.econ.api.store.management.CartDispenserEntity;
+import com.silvaniastudios.econ.api.store.management.StockChestBlock;
+import com.silvaniastudios.econ.api.store.management.StoreManagerBlock;
+import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
+import com.silvaniastudios.econ.api.store.management.TillBlock;
 import com.silvaniastudios.econ.core.blocks.ATMBlock;
 import com.silvaniastudios.econ.core.blocks.ATMEntity;
 import com.silvaniastudios.econ.core.items.CitiesItemBlock;

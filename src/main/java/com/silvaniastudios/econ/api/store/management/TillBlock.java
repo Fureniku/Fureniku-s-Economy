@@ -1,4 +1,4 @@
-package com.silvaniastudios.econ.api.store;
+package com.silvaniastudios.econ.api.store.management;
 
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.blocks.EconBlockBase;
@@ -14,9 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
-public class CartDispenserBlock extends EconBlockBase {
+public class TillBlock extends EconBlockBase {
 
-	public CartDispenserBlock(String name) {
+	public TillBlock(String name) {
 		super(name, Material.IRON);
 		this.setHardness(1.0F);
 		this.setCreativeTab(FurenikusEconomy.tabEcon);
@@ -27,8 +27,14 @@ public class CartDispenserBlock extends EconBlockBase {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
         	TileEntity te = world.getTileEntity(pos);
-        	if (te != null && te instanceof CartDispenserEntity) {
-        		CartDispenserEntity entity = (CartDispenserEntity) te;
+        	if (te != null && te instanceof TillEntity) {
+        		TillEntity entity = (TillEntity) te;
+        		
+        		if (entity.ownerUuid.isEmpty()) {
+        			entity.ownerUuid = player.getCachedUniqueIdString();
+        			entity.ownerName = player.getDisplayName().getFormattedText();
+        			player.sendMessage(new TextComponentString(I18n.format("econ.shop.claimed", this.getPickBlock(state, null, world, pos, player).getDisplayName())));
+        		}
         		
         		TileEntity te2 = world.getTileEntity(entity.managerPos);
         		if (te2 != null && te2 instanceof StoreManagerEntity) {
@@ -36,25 +42,17 @@ public class CartDispenserBlock extends EconBlockBase {
         			
         			if (!manager_entity.isShopOpen()) {
         				player.sendMessage(new TextComponentString(I18n.format("econ.shop.closed")));
-        				return false;
         			}
-        			
-        			if (player.getUniqueID().toString().equalsIgnoreCase(entity.ownerUuid)) {
-            			//Owner code
-        				return true;
-            		} else {
-            			manager_entity.createCart(player);
-            			player.sendMessage(new TextComponentString(I18n.format("econ.shop.open_cart", manager_entity.shopName, "CART_KEY")));
-            			return true;
-            		}
-        		} else {
-        			player.sendMessage(new TextComponentString(I18n.format("econ.shop.closed")));
+        		
+	        		if (player.getUniqueID().toString().equalsIgnoreCase(entity.ownerUuid)) {
+	        			//Owner code
+	        		} else {
+	        			//not owner code
+	        		}
         		}
-        		
-        		
         	}
         }
-        return false;
+        return true;
 	}
 	
 	@Override
@@ -64,6 +62,6 @@ public class CartDispenserBlock extends EconBlockBase {
     
     @Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    	return new CartDispenserEntity();
+    	return new TillEntity();
     }
 }

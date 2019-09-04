@@ -34,6 +34,9 @@ econ.shop.not_owner=You do not own this shop.
 econ.shop.open_cart=You have started a cart at %s. Press %s to view your cart.
 econ.shop.closed=This shop is currently closed.
 
+econ.shop.claimed=You have successfully claimed this %s.
+
+
 econ.shop.customer.cart_closing_inactive=Your cart will close in 30 seconds due to inactivity.
 econ.shop.customer.cart_closed_inactive=Your cart has closed due to inactivity.
 econ.shop.customer.cart_closed_forced=Your cart at %s has been closed by the shop owner.
