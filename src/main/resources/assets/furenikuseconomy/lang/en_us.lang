@@ -36,7 +36,8 @@ econ.shop.closed=This shop is currently closed.
 
 econ.shop.claimed=You have successfully claimed this %s.
 
-
+econ.shop.customer.no_cart=You do not have a cart open for this shop.
+econ.shop.till_timeout=Your till session has timed out, and purchased items dropped to the floor.
 econ.shop.customer.cart_closing_inactive=Your cart will close in 30 seconds due to inactivity.
 econ.shop.customer.cart_closed_inactive=Your cart has closed due to inactivity.
 econ.shop.customer.cart_closed_forced=Your cart at %s has been closed by the shop owner.

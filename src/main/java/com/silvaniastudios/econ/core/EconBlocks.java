@@ -3,11 +3,15 @@ package com.silvaniastudios.econ.core;
 import com.silvaniastudios.econ.api.store.management.CartDispenserBlock;
 import com.silvaniastudios.econ.api.store.management.CartDispenserEntity;
 import com.silvaniastudios.econ.api.store.management.StockChestBlock;
+import com.silvaniastudios.econ.api.store.management.StockChestEntity;
 import com.silvaniastudios.econ.api.store.management.StoreManagerBlock;
 import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 import com.silvaniastudios.econ.api.store.management.TillBlock;
+import com.silvaniastudios.econ.api.store.management.TillEntity;
+import com.silvaniastudios.econ.api.store.shops.CartShopBase;
 import com.silvaniastudios.econ.core.blocks.ATMBlock;
 import com.silvaniastudios.econ.core.blocks.ATMEntity;
+import com.silvaniastudios.econ.core.blocks.shop.FloatingShelvesBlock;
 import com.silvaniastudios.econ.core.items.CitiesItemBlock;
 
 import net.minecraft.block.Block;
@@ -28,6 +32,8 @@ public class EconBlocks {
 	public static StockChestBlock stock_chest = new StockChestBlock("stock_chest");
 	public static TillBlock till = new TillBlock("till");
 	
+	public static FloatingShelvesBlock floating_shelves = new FloatingShelvesBlock("floating_shelves");
+	
 	
 	public static void register(IForgeRegistry<Block> registry) {
 		//Base stuff
@@ -36,6 +42,8 @@ public class EconBlocks {
 		registry.register(cart_dispenser);
 		registry.register(stock_chest);
 		registry.register(till);
+		
+		registry.register(floating_shelves);
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry) {
@@ -44,6 +52,8 @@ public class EconBlocks {
 		registry.register(new ItemBlock(cart_dispenser).setRegistryName(cart_dispenser.getRegistryName()));
 		registry.register(new ItemBlock(stock_chest).setRegistryName(stock_chest.getRegistryName()));
 		registry.register(new ItemBlock(till).setRegistryName(till.getRegistryName()));
+		
+		registry.register(new ItemBlock(floating_shelves).setRegistryName(floating_shelves.getRegistryName()));
 	}
 	
 	public static void registerModels() {
@@ -52,6 +62,8 @@ public class EconBlocks {
 		cart_dispenser.initModel();
 		stock_chest.initModel();
 		till.initModel();
+		
+		floating_shelves.initModel();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -59,6 +71,10 @@ public class EconBlocks {
 		GameRegistry.registerTileEntity(ATMEntity.class, FurenikusEconomy.MODID + ":atm");
 		GameRegistry.registerTileEntity(StoreManagerEntity.class, FurenikusEconomy.MODID + ":store_manager");
 		GameRegistry.registerTileEntity(CartDispenserEntity.class, FurenikusEconomy.MODID + ":cart_dispenser");
+		GameRegistry.registerTileEntity(StockChestEntity.class, FurenikusEconomy.MODID + ":stock_chest");
+		GameRegistry.registerTileEntity(TillEntity.class, FurenikusEconomy.MODID + ":till");
+		
+		GameRegistry.registerTileEntity(CartShopBase.class, FurenikusEconomy.MODID + ":floating_shelves");
 	}
 	
 	@SideOnly(Side.CLIENT)

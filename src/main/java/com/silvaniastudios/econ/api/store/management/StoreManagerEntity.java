@@ -348,6 +348,10 @@ public class StoreManagerEntity extends TileEntity implements ITickable {
 		cart.setShopManager(null);
 	}
 	
+	public void payStoreManager(long amount) {
+		balance += amount;
+	}
+	
 	public void moveCartToStockChest(ItemStack stack) {
 		for (int i = 0; i < stockPosArray.size(); i++) {
 			TileEntity te = world.getTileEntity(stockPosArray.get(i));

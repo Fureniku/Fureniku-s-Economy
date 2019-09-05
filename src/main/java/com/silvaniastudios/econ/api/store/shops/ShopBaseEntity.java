@@ -4,11 +4,14 @@ import javax.annotation.Nonnull;
 
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.api.store.StoreEntityBase;
+import com.silvaniastudios.econ.api.store.management.StockChestEntity;
+import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -16,8 +19,10 @@ import net.minecraftforge.items.ItemStackHandler;
 public class ShopBaseEntity extends StoreEntityBase {
 	
 	int shopSize = 0;
-	
 	public int[] priceList;
+	public BlockPos managerPos;
+	public boolean[] match_meta;
+	public boolean[] match_nbt;
 	
 	EconUtils utils = new EconUtils();
 	
@@ -65,6 +70,15 @@ public class ShopBaseEntity extends StoreEntityBase {
 			inventory.deserializeNBT((NBTTagCompound) nbt.getTag("items"));
 		}
 		priceList = nbt.getIntArray("priceList");
+		
+		nbt.setInteger("manPosX", managerPos.getX());
+		nbt.setInteger("manPosY", managerPos.getX());
+		nbt.setInteger("manPosZ", managerPos.getX());
+		
+		for (int i = 0; i < shopSize; i++) {
+			nbt.setBoolean("match_meta_" + i, match_meta[i]);
+			nbt.setBoolean("match_nbt_" + i, match_nbt[i]);
+		}
 	}
 	
 	/**
@@ -76,34 +90,65 @@ public class ShopBaseEntity extends StoreEntityBase {
 	public NBTTagCompound writeNBT(NBTTagCompound nbt) {
 		nbt.setTag("items", inventory.serializeNBT());
 		nbt.setIntArray("priceList", priceList);
+		
+		int x = nbt.getInteger("manPosX");
+		int y = nbt.getInteger("manPosY");
+		int z = nbt.getInteger("manPosZ");
+		managerPos = new BlockPos(x, y, z);
+		
+		for (int i = 0; i < shopSize; i++) {
+			match_meta[i] = nbt.getBoolean("match_meta_" + i);
+			match_nbt[i]  = nbt.getBoolean("match_nbt_" + i);
+		}
+		
 		return nbt;
 	}
 	
 	/**
-	 * Performs a direct transaction (usually a sale).
-	 * Checks the buyer has enough money and that the item is in-stock, and then takes their money and gives them the item.
-	 * This doesn't use the shopping cart system.
-	 * @param int The ID of the slot we're transacting
-	 * @param EntityPlayer the player making the purchase
-	 * @param ItemStackHandler the available items in this shop interface
-	 * @return
+	 * Get the manager of this block, if one has been set.
+	 * @return The StoreManagerEntity if set, and null if not.
 	 */
-	public boolean performDirectTransaction(int slotId, EntityPlayer buyer, ItemStackHandler inv) {
-		if (slotId <= inv.getSlots()) {
-			int price = priceList[slotId];
-			
-			if (utils.getBalance(buyer) >= price) {
-				//TODO add stock check, and remove stock when giving to player
-				buyer.addItemStackToInventory(inv.getStackInSlot(slotId));
-				utils.chargePlayerAnywhere(buyer, price);
-				//TODO place money in the till
-				return true;
-			}
+	public StoreManagerEntity getManager() {
+		if (world.getTileEntity(managerPos) != null && world.getTileEntity(managerPos) instanceof StoreManagerEntity) {
+			return (StoreManagerEntity) world.getTileEntity(managerPos);
 		}
-		return false;
+		return null;
 	}
 	
-	public boolean addItemToCart(int slotId, EntityPlayer buyer, ItemStackHandler inv) {
-		return false;
+	/**
+	 * Set the manager of this block
+	 * @param BlockPos the position of the manager block
+	 */
+	public void setManager(BlockPos pos) {
+		managerPos = pos;
+	}
+	
+	public boolean hasManager() {
+		return getManager() != null;
+	}
+	
+	public ItemStack findStockInStockChests(StoreManagerEntity e, ItemStack itemToFind, int slot) {
+		for (int i = 0; i < e.stockPosArray.size(); i++) {
+			TileEntity te = world.getTileEntity(e.stockPosArray.get(i));
+			if (te != null && te instanceof StockChestEntity) {
+				StockChestEntity entity = (StockChestEntity) te;
+				
+				for (int j = 0; j < entity.inventory.getSlots(); j++) {
+					ItemStack found = entity.inventory.getStackInSlot(j);
+					
+					if (found.getItem() == itemToFind.getItem()) {
+						if ((found.getItemDamage() == itemToFind.getItemDamage()) || !match_meta[slot]) {
+							if ((found.getTagCompound() == itemToFind.getTagCompound()) || !match_nbt[slot]) {
+								if (found.getCount() >= itemToFind.getCount()) {
+									return found.splitStack(itemToFind.getCount());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return ItemStack.EMPTY;
 	}
 }

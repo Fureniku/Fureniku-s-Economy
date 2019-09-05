@@ -2,9 +2,6 @@ package com.silvaniastudios.econ.core;
 
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.api.capability.CapabilityEventHandler;
-import com.silvaniastudios.econ.api.capability.cart.CartCapability;
-import com.silvaniastudios.econ.api.capability.cart.CartStorage;
-import com.silvaniastudios.econ.api.capability.cart.ICart;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyCapability;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyStorage;
 import com.silvaniastudios.econ.api.capability.currency.ICurrency;
@@ -74,11 +71,6 @@ public class FurenikusEconomy {
 	    /*if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 	    	MinecraftForge.EVENT_BUS.register(new StoreStockInfoRender(Minecraft.getMinecraft()));
 	    }*/
-	    
-	    //GameRegistry.registerTileEntity(TileEntityFloatingShelves.class, "tileEntityFloatingShelves");
-	    //GameRegistry.registerTileEntity(TileEntityAdminShop.class, "tileEntityAdminShop");
-	    //GameRegistry.registerTileEntity(NPCSpawnerEntity.class, "npcSpawnerBlock");
-	    //GameRegistry.registerTileEntity(TileEntityStockChest.class, "tileEntityStockChest");
     }
                
     @EventHandler

@@ -45,6 +45,11 @@ public class EconConfig {
 	@Config.Comment("How long (in minutes) before a players shopping cart should time out and close")
 	public static int cartTimeout = 15;
 	
+	@Config.Comment("How long (in seconds) before a till's secure storage should time out. \n"
+			+ "When a player makes a cart purchase, their items are moved to the till for them to withdraw to their inventory. \n"
+			+ "After this time period elapses, any items still in the till are ejected onto the floor, freeing up the till for the next customer.")
+	public static int tillTimeout = 60;
+	
 	@Config.Comment("The maximum distance a player can be from the store manager before their cart is closed")
 	public static int maxDistance = 64;
 }

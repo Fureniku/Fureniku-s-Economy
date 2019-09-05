@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.silvaniastudios.econ.api.store.shops.CartShopBase;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
 
 import net.minecraft.block.BlockHorizontal;
@@ -35,7 +36,7 @@ public class FloatingShelvesBlock extends ShopBaseBlock {
 	
 	@Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
-		return new FloatingShelvesEntity();
+		return new CartShopBase(4);
 	}
 	
 	@Override

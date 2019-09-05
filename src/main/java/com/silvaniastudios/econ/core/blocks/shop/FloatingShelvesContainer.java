@@ -1,5 +1,7 @@
 package com.silvaniastudios.econ.core.blocks.shop;
 
+import com.silvaniastudios.econ.api.store.shops.CartShopBase;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -11,9 +13,9 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class FloatingShelvesContainer extends Container {
 	
-	FloatingShelvesEntity entity;
+	CartShopBase entity;
 	
-	public FloatingShelvesContainer(InventoryPlayer invPlayer, FloatingShelvesEntity tileEntity) {
+	public FloatingShelvesContainer(InventoryPlayer invPlayer, CartShopBase tileEntity) {
 		this.entity = tileEntity;
 		
 		IItemHandler itemHandler = this.entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
