@@ -11,11 +11,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class FloatingShelvesContainer extends Container {
+public class ShopShelvesContainer extends Container {
 	
 	CartShopBase entity;
 	
-	public FloatingShelvesContainer(InventoryPlayer invPlayer, CartShopBase tileEntity) {
+	public ShopShelvesContainer(InventoryPlayer invPlayer, CartShopBase tileEntity) {
 		this.entity = tileEntity;
 		
 		IItemHandler itemHandler = this.entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

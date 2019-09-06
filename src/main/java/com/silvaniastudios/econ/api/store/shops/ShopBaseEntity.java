@@ -127,7 +127,7 @@ public class ShopBaseEntity extends StoreEntityBase {
 		return getManager() != null;
 	}
 	
-	public ItemStack findStockInStockChests(StoreManagerEntity e, ItemStack itemToFind, int slot) {
+	public ItemStack findStockInStockChests(StoreManagerEntity e, ItemStack itemToFind, int saleSlot) {
 		for (int i = 0; i < e.stockPosArray.size(); i++) {
 			TileEntity te = world.getTileEntity(e.stockPosArray.get(i));
 			if (te != null && te instanceof StockChestEntity) {
@@ -136,19 +136,42 @@ public class ShopBaseEntity extends StoreEntityBase {
 				for (int j = 0; j < entity.inventory.getSlots(); j++) {
 					ItemStack found = entity.inventory.getStackInSlot(j);
 					
-					if (found.getItem() == itemToFind.getItem()) {
-						if ((found.getItemDamage() == itemToFind.getItemDamage()) || !match_meta[slot]) {
-							if ((found.getTagCompound() == itemToFind.getTagCompound()) || !match_nbt[slot]) {
-								if (found.getCount() >= itemToFind.getCount()) {
-									return found.splitStack(itemToFind.getCount());
-								}
-							}
-						}
+					if (compareItemStacks(itemToFind, found, match_meta[saleSlot], match_nbt[saleSlot])) {
+						return found.splitStack(itemToFind.getCount());
 					}
 				}
 			}
 		}
 		
 		return ItemStack.EMPTY;
+	}
+	
+	public boolean checkStockAvailability(StoreManagerEntity e, ItemStack itemToFind, int saleSlot) {
+		for (int i = 0; i < e.stockPosArray.size(); i++) {
+			TileEntity te = world.getTileEntity(e.stockPosArray.get(i));
+			if (te != null && te instanceof StockChestEntity) {
+				StockChestEntity entity = (StockChestEntity) te;
+				for (int j = 0; j < entity.inventory.getSlots(); j++) {
+					ItemStack found = entity.inventory.getStackInSlot(j);
+					if (compareItemStacks(itemToFind, found, match_meta[saleSlot], match_nbt[saleSlot])) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean compareItemStacks(ItemStack original, ItemStack found, boolean meta, boolean nbt) {
+		if (found.getItem() == original.getItem()) {
+			if ((found.getItemDamage() == original.getItemDamage()) || !meta) {
+				if ((found.getTagCompound() == original.getTagCompound()) || !nbt) {
+					if (found.getCount() >= original.getCount()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

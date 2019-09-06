@@ -1,5 +1,6 @@
 package com.silvaniastudios.econ.core;
 
+import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.store.management.CartDispenserBlock;
 import com.silvaniastudios.econ.api.store.management.CartDispenserEntity;
 import com.silvaniastudios.econ.api.store.management.StockChestBlock;
@@ -11,7 +12,7 @@ import com.silvaniastudios.econ.api.store.management.TillEntity;
 import com.silvaniastudios.econ.api.store.shops.CartShopBase;
 import com.silvaniastudios.econ.core.blocks.ATMBlock;
 import com.silvaniastudios.econ.core.blocks.ATMEntity;
-import com.silvaniastudios.econ.core.blocks.shop.FloatingShelvesBlock;
+import com.silvaniastudios.econ.core.blocks.shop.ShopShelvesBlock;
 import com.silvaniastudios.econ.core.items.CitiesItemBlock;
 
 import net.minecraft.block.Block;
@@ -32,7 +33,9 @@ public class EconBlocks {
 	public static StockChestBlock stock_chest = new StockChestBlock("stock_chest");
 	public static TillBlock till = new TillBlock("till");
 	
-	public static FloatingShelvesBlock floating_shelves = new FloatingShelvesBlock("floating_shelves");
+	public static ShopShelvesBlock shop_shelves_full  = new ShopShelvesBlock("shop_shelves_full",  4, EconConstants.Gui.SHOP_SHELVES_FULL);
+	public static ShopShelvesBlock shop_shelves_half  = new ShopShelvesBlock("shop_shelves_half",  2, EconConstants.Gui.SHOP_SHELVES_HALF);
+	public static ShopShelvesBlock shop_shelves_large = new ShopShelvesBlock("shop_shelves_large", 2, EconConstants.Gui.SHOP_SHELVES_LARGE);
 	
 	
 	public static void register(IForgeRegistry<Block> registry) {
@@ -43,7 +46,9 @@ public class EconBlocks {
 		registry.register(stock_chest);
 		registry.register(till);
 		
-		registry.register(floating_shelves);
+		registry.register(shop_shelves_full);
+		registry.register(shop_shelves_half);
+		registry.register(shop_shelves_large);
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry) {
@@ -53,7 +58,9 @@ public class EconBlocks {
 		registry.register(new ItemBlock(stock_chest).setRegistryName(stock_chest.getRegistryName()));
 		registry.register(new ItemBlock(till).setRegistryName(till.getRegistryName()));
 		
-		registry.register(new ItemBlock(floating_shelves).setRegistryName(floating_shelves.getRegistryName()));
+		registry.register(new ItemBlock(shop_shelves_full).setRegistryName(shop_shelves_full.getRegistryName()));
+		registry.register(new ItemBlock(shop_shelves_half).setRegistryName(shop_shelves_half.getRegistryName()));
+		registry.register(new ItemBlock(shop_shelves_large).setRegistryName(shop_shelves_large.getRegistryName()));
 	}
 	
 	public static void registerModels() {
@@ -63,7 +70,9 @@ public class EconBlocks {
 		stock_chest.initModel();
 		till.initModel();
 		
-		floating_shelves.initModel();
+		shop_shelves_full.initModel();
+		shop_shelves_half.initModel();
+		shop_shelves_large.initModel();
 	}
 	
 	@SuppressWarnings("deprecation")

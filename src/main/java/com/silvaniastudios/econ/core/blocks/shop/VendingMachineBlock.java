@@ -4,8 +4,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.silvaniastudios.econ.api.store.shops.CartShopBase;
+import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
+import com.silvaniastudios.econ.api.store.shops.StandaloneShopBase;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.IProperty;
@@ -25,23 +26,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FloatingShelvesBlock extends ShopBaseBlock {
+public class VendingMachineBlock extends ShopBaseBlock {
 	
 	public static final PropertyDirection ROTATION = BlockHorizontal.FACING;
 
-	public FloatingShelvesBlock(String name) {
+	public VendingMachineBlock(String name) {
 		super(name);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(ROTATION, EnumFacing.NORTH));
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
-		return new CartShopBase(4);
+		return new StandaloneShopBase(24, 0, true);
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		openGui(world, pos, player, 1);
+		openGui(world, pos, player, EconConstants.Gui.VENDING_MACHINE);
 		return true;
 	}
 	

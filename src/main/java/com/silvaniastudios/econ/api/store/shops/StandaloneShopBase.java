@@ -10,23 +10,27 @@ public class StandaloneShopBase extends ShopBaseEntity {
 	
 	long shopBalance = 0;
 	int storageSize;
+	boolean sellSingle = false;
 
 	/**
 	 * @param shopSize How many slots of stock can be sold
 	 * @param storageSize How many slots for stock storage - set to 0 to sell directly out of sale slots.
 	 */
-	public StandaloneShopBase(int shopSize, int storageSize) {
+	public StandaloneShopBase(int shopSize, int storageSize, boolean sellSingle) {
 		super(shopSize);
 		this.storageSize = storageSize;
+		this.sellSingle = sellSingle;
 	}
 	
 	public void readNBT(NBTTagCompound nbt) {
 		shopBalance = nbt.getLong("shopBalance");
+		sellSingle = nbt.getBoolean("sellSingle");
 		super.readNBT(nbt);
 	}
 	
 	public NBTTagCompound writeNBT(NBTTagCompound nbt) {
 		nbt.setLong("shopBalance", shopBalance);
+		nbt.setBoolean("sellSingle", sellSingle);
 		return super.writeNBT(nbt);
 	}
 	
@@ -55,8 +59,15 @@ public class StandaloneShopBase extends ShopBaseEntity {
 					}	
 				} else {
 					if (utils.chargePlayerAnywhere(buyer, price)) {
-						buyer.addItemStackToInventory(inventory.getStackInSlot(slotId));
-						inventory.setStackInSlot(slotId, ItemStack.EMPTY);
+						ItemStack sellStack = inventory.getStackInSlot(slotId);
+						if (sellSingle) {
+							buyer.addItemStackToInventory(sellStack);
+							sellStack.setCount(sellStack.getCount()-1);
+							inventory.setStackInSlot(slotId, sellStack);
+						} else {
+							buyer.addItemStackToInventory(inventory.getStackInSlot(slotId));
+							inventory.setStackInSlot(slotId, ItemStack.EMPTY);
+						}
 						payShop(price);
 					}
 				}

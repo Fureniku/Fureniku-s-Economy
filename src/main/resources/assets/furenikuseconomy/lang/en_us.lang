@@ -1,6 +1,18 @@
 item.debitCard.name=Debit Card
 item.storeStockPairer.name=Store Stock Pairing Device
 
+tile.furenikuseconomy.atm_block.name=ATM
+tile.furenikuseconomy.store_manager.name=Store Manager
+tile.furenikuseconomy.cart_dispenser.name=Cart Dispenser
+tile.furenikuseconomy.stock_chest.name=Stock Chest
+tile.furenikuseconomy.till.name=Register
+
+tile.furenikuseconomy.shop_shelves_full.name=Shop Shelves (Full)
+tile.furenikuseconomy.shop_shelves_half.name=
+tile.furenikuseconomy.shop_shelves_large.name=
+tile.furenikuseconomy.vending_machine.name=Vending Machine
+tile.furenikuseconomy..name=
+
 item.coin1.name=1 Cent
 item.coin2.name=2 Cents
 item.coin5.name=5 Cents
@@ -27,8 +39,37 @@ item.cpu.name=CPU
 
 itemGroup.tabEcon=FlenixCities Economy
 
+econ.shop.trade.money_received=You have received %s from your trade with %s.
+
+econ.tooltip.shops.store_manager.1=Controls a shop, linking interfaces to stock.
+econ.tooltip.shops.store_manager.2=Can be used to modify various aspects of the shop.
+econ.tooltip.shops.store_manager.3=Karen probably wants to talk to it.
+
+econ.tooltip.shops.stock_chest.1=Holds stock for a shop.
+econ.tooltip.shops.stock_chest.2=Can be configured to three modes. Hold Sneak for details.
+econ.tooltip.shops.stock_chest.details.1.title=NORMAL
+econ.tooltip.shops.stock_chest.details.1.description=Provides Stock to shops. Default option.
+econ.tooltip.shops.stock_chest.details.2.title=BACK TO STOCK
+econ.tooltip.shops.stock_chest.details.2.description=When a player cart is closed, stock is placed here before anywhere else.
+econ.tooltip.shops.stock_chest.details.3.title=INBOUND
+econ.tooltip.shops.stock_chest.details.3.description=Stock can be placed here, but cannot be taken from here for a sale. Ideal for trading posts.
+
+econ.tooltip.shops.till.1=Process the sale of a customers cart.
+econ.tooltip.shops.till.2=Required for shops which have cart systems.
+
+econ.tooltip.shops.cart_dispenser.1=Allow buyers to create a cart.
+econ.tooltip.shops.cart_dispenser.2=Carts allow the buyer to collect multiple items, then buy them all in one transaction.
+
+econ.tooltip.shops.trading_post.1=Create a single, automated trade, requesting and offering both items and money.
+econ.tooltip.shops.trading_post.2=Kind of like a Villager, but player-made and not a Villager.
+
+econ.tooltip.shops.trading_block.1=Perform a live trade of items and money between two players.
+
 econ.tooltip.shops.floating_shelves.1=Holds up to four types of stock.
 econ.tooltip.shops.floating_shelves.2=Must be paired to a Store Manager.
+
+econ.tooltip.shops.vending_machine.1=Holds up to 24 types of stock (Items only).
+econ.tooltip.shops.vending_machine.2=Will only sell single units at once. Holds up to 16 (or max stack size if less) of each item.
 
 econ.shop.not_owner=You do not own this shop.
 econ.shop.open_cart=You have started a cart at %s. Press %s to view your cart.
