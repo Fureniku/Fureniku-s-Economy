@@ -52,4 +52,7 @@ public class EconConfig {
 	
 	@Config.Comment("The maximum distance a player can be from the store manager before their cart is closed")
 	public static int maxDistance = 64;
+	
+	@Config.Comment("Set to false to turn off the \"Next time, try shift-right clicking...\" message when depositing individual money items to an ATM.")
+	public static boolean fastDepositNotification = true;
 }

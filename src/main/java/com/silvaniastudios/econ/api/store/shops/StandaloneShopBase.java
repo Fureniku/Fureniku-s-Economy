@@ -1,10 +1,13 @@
 package com.silvaniastudios.econ.api.store.shops;
 
+import javax.annotation.Nonnull;
+
 import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class StandaloneShopBase extends ShopBaseEntity {
 	
@@ -12,14 +15,21 @@ public class StandaloneShopBase extends ShopBaseEntity {
 	int storageSize;
 	boolean sellSingle = false;
 
-	/**
-	 * @param shopSize How many slots of stock can be sold
-	 * @param storageSize How many slots for stock storage - set to 0 to sell directly out of sale slots.
-	 */
-	public StandaloneShopBase(int shopSize, int storageSize, boolean sellSingle) {
+
+	public StandaloneShopBase(int shopSize) {
 		super(shopSize);
-		this.storageSize = storageSize;
-		this.sellSingle = sellSingle;
+		inventory = new ItemStackHandler(shopSize) {
+			
+			@Override
+			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+				return true;
+			}
+			
+			@Override
+			protected void onContentsChanged(int slot) {
+				markDirty();
+			}
+		};
 	}
 	
 	public void readNBT(NBTTagCompound nbt) {

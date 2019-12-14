@@ -1,5 +1,11 @@
 package com.silvaniastudios.econ.api.store.management;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.lwjgl.input.Keyboard;
+
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseEntity;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
@@ -7,6 +13,8 @@ import com.silvaniastudios.econ.core.items.EconItemBase;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +23,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class StoreStockPairer extends EconItemBase {
@@ -25,6 +34,7 @@ public class StoreStockPairer extends EconItemBase {
 		this.setCreativeTab(FurenikusEconomy.tabEcon);
 	}
 	
+	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		IBlockState state = worldIn.getBlockState(pos);
 		Block block = state.getBlock();
@@ -37,17 +47,23 @@ public class StoreStockPairer extends EconItemBase {
 		NBTTagCompound nbt = stack.getTagCompound();
 		
 		if (nbt == null) {
+			System.out.println("Creating new NBT because it didn't exist yet");
 			nbt = new NBTTagCompound();
 		}
 		
+		System.out.println("Block hit is a " + block.getLocalizedName());
+		
 		if (nbt.getString("owner_uuid").equalsIgnoreCase(player.getCachedUniqueIdString()) || nbt.getString("owner_uuid").length() < 1) {
+			System.out.println("Start doing NBT stuff");
 			if (block instanceof StoreManagerBlock) {
+				System.out.println("Manager data should now be set.");
 				nbt.setInteger("manager_x", pos.getX());
 				nbt.setInteger("manager_y", pos.getY());
 				nbt.setInteger("manager_z", pos.getZ());
 				nbt.setBoolean("manager_set", true);
 				nbt.setString("owner_uuid", player.getCachedUniqueIdString());
 				nbt.setString("owner_name", player.getDisplayNameString());
+				stack.setTagCompound(nbt);
 				return EnumActionResult.PASS;
 			}
 
@@ -98,35 +114,40 @@ public class StoreStockPairer extends EconItemBase {
 						}
 					}
 				}
+				
+			} else {
+				System.out.println("Mismatch");
 			}
 		}
 		return EnumActionResult.FAIL;
 	}
 	
-	/*@Override
-	public void addInformation(ItemStack item, EntityPlayer player, List list, boolean par4) {
-		if (item.stackTagCompound != null) {
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		if (stack.hasTagCompound()) {
 			if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				list.add(EnumChatFormatting.ITALIC + "Sneak to see stored data");
+				tooltip.add(TextFormatting.ITALIC + "Sneak to see stored data");
 			} else {
-				EnumChatFormatting colour;
+				TextFormatting colour;
+				NBTTagCompound nbt = stack.getTagCompound();
+				EntityPlayer player = Minecraft.getMinecraft().player;
 				
-				if (player.getDisplayName().equalsIgnoreCase(item.stackTagCompound.getString("storeOwner"))) {
-					colour = EnumChatFormatting.GREEN;
+				if (player.getCachedUniqueIdString().equalsIgnoreCase(nbt.getString("owner_uuid"))) {
+					colour = TextFormatting.GREEN;
 				} else {
-					colour = EnumChatFormatting.RED;
+					colour = TextFormatting.RED;
 				}
 				
-				list.add("Stock Chest owner: " + item.stackTagCompound.getString("playerName"));
-				list.add("");
-				list.add("Stock Chest X Position: " + item.stackTagCompound.getInteger("xPos"));
-				list.add("Stock Chest Y Position: " + item.stackTagCompound.getInteger("yPos"));
-				list.add("Stock Chest Z Position: " + item.stackTagCompound.getInteger("zPos"));
+				tooltip.add(colour + "Store Manager owner: " + nbt.getString("owner_name"));
+				tooltip.add("");
+				tooltip.add("Store Manager X Position: " + nbt.getInteger("manager_x"));
+				tooltip.add("Store Manager Y Position: " + nbt.getInteger("manager_y"));
+				tooltip.add("Store Manager Z Position: " + nbt.getInteger("manager_z"));
 			}
 		} else {
-			list.add(EnumChatFormatting.ITALIC + "" + EnumChatFormatting.GOLD + "This Stock Link has not been used yet!");
-			list.add(EnumChatFormatting.ITALIC + "" + EnumChatFormatting.YELLOW + "Right-click a Stock Chest to save it's data,");
-			list.add(EnumChatFormatting.ITALIC + "" + EnumChatFormatting.YELLOW + "Then right-click your store to create a link.");
+			tooltip.add(TextFormatting.ITALIC + "" + TextFormatting.GOLD + "This Stock Link has not been used yet!");
+			tooltip.add(TextFormatting.ITALIC + "" + TextFormatting.YELLOW + "Right-click a Stock Chest to save it's data,");
+			tooltip.add(TextFormatting.ITALIC + "" + TextFormatting.YELLOW + "Then right-click your store to create a link.");
 		}
-	}*/
+	}
 }

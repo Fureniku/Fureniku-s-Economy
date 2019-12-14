@@ -1,6 +1,5 @@
 package com.silvaniastudios.econ.core;
 
-import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.store.management.CartDispenserBlock;
 import com.silvaniastudios.econ.api.store.management.CartDispenserEntity;
 import com.silvaniastudios.econ.api.store.management.StockChestBlock;
@@ -9,10 +8,10 @@ import com.silvaniastudios.econ.api.store.management.StoreManagerBlock;
 import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 import com.silvaniastudios.econ.api.store.management.TillBlock;
 import com.silvaniastudios.econ.api.store.management.TillEntity;
-import com.silvaniastudios.econ.api.store.shops.CartShopBase;
 import com.silvaniastudios.econ.core.blocks.ATMBlock;
 import com.silvaniastudios.econ.core.blocks.ATMEntity;
-import com.silvaniastudios.econ.core.blocks.shop.ShopShelvesBlock;
+import com.silvaniastudios.econ.core.blocks.shop.ShelvesFullBlock;
+import com.silvaniastudios.econ.core.blocks.shop.ShelvesFullEntity;
 import com.silvaniastudios.econ.core.items.CitiesItemBlock;
 
 import net.minecraft.block.Block;
@@ -33,9 +32,9 @@ public class EconBlocks {
 	public static StockChestBlock stock_chest = new StockChestBlock("stock_chest");
 	public static TillBlock till = new TillBlock("till");
 	
-	public static ShopShelvesBlock shop_shelves_full  = new ShopShelvesBlock("shop_shelves_full",  4, EconConstants.Gui.SHOP_SHELVES_FULL);
-	public static ShopShelvesBlock shop_shelves_half  = new ShopShelvesBlock("shop_shelves_half",  2, EconConstants.Gui.SHOP_SHELVES_HALF);
-	public static ShopShelvesBlock shop_shelves_large = new ShopShelvesBlock("shop_shelves_large", 2, EconConstants.Gui.SHOP_SHELVES_LARGE);
+	public static ShelvesFullBlock shop_shelves_full  = new ShelvesFullBlock("shop_shelves_full");
+	public static ShelvesFullBlock shop_shelves_half  = new ShelvesFullBlock("shop_shelves_half");
+	public static ShelvesFullBlock shop_shelves_large = new ShelvesFullBlock("shop_shelves_large");
 	
 	
 	public static void register(IForgeRegistry<Block> registry) {
@@ -83,7 +82,7 @@ public class EconBlocks {
 		GameRegistry.registerTileEntity(StockChestEntity.class, FurenikusEconomy.MODID + ":stock_chest");
 		GameRegistry.registerTileEntity(TillEntity.class, FurenikusEconomy.MODID + ":till");
 		
-		GameRegistry.registerTileEntity(CartShopBase.class, FurenikusEconomy.MODID + ":floating_shelves");
+		GameRegistry.registerTileEntity(ShelvesFullEntity.class, FurenikusEconomy.MODID + ":floating_shelves_full");
 	}
 	
 	@SideOnly(Side.CLIENT)

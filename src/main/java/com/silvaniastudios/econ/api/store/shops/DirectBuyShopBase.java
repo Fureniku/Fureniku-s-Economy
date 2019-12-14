@@ -1,14 +1,29 @@
 package com.silvaniastudios.econ.api.store.shops;
 
+import javax.annotation.Nonnull;
+
 import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class DirectBuyShopBase extends ShopBaseEntity {
 
 	public DirectBuyShopBase(int shopSize) {
 		super(shopSize);
+		inventory = new ItemStackHandler(shopSize) {
+			
+			@Override
+			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+				return true;
+			}
+			
+			@Override
+			protected void onContentsChanged(int slot) {
+				markDirty();
+			}
+		};
 	}
 	
 	/**

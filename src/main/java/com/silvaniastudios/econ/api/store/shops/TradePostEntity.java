@@ -1,10 +1,13 @@
 package com.silvaniastudios.econ.api.store.shops;
 
+import javax.annotation.Nonnull;
+
 import com.silvaniastudios.econ.api.EconUtils;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class TradePostEntity extends ShopBaseEntity {
 	
@@ -17,8 +20,20 @@ public class TradePostEntity extends ShopBaseEntity {
 	public boolean salesRefillBudget = false;
 	EconUtils utils = new EconUtils();
 	
-	public TradePostEntity(int shopSize) {
+	public TradePostEntity() {
 		super(6);
+		inventory = new ItemStackHandler(shopSize) {
+			
+			@Override
+			public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+				return true;
+			}
+			
+			@Override
+			protected void onContentsChanged(int slot) {
+				markDirty();
+			}
+		};
 	}
 	
 	public boolean performTrade(EntityPlayer buyer) {

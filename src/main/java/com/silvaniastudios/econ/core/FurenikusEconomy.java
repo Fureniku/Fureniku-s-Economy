@@ -5,6 +5,12 @@ import com.silvaniastudios.econ.api.capability.CapabilityEventHandler;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyCapability;
 import com.silvaniastudios.econ.api.capability.currency.CurrencyStorage;
 import com.silvaniastudios.econ.api.capability.currency.ICurrency;
+import com.silvaniastudios.econ.network.OpenGuiServerSide;
+import com.silvaniastudios.econ.network.ShopUpdatePacket;
+import com.silvaniastudios.econ.network.StockUpdatePacket;
+import com.silvaniastudios.econ.network.StoreManagerClearLogPacket;
+import com.silvaniastudios.econ.network.StoreManagerUpdatePacket;
+import com.silvaniastudios.econ.network.StoreManagerWithdrawPacket;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -24,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid=FurenikusEconomy.MODID, version=FurenikusEconomy.VERSION)
 public class FurenikusEconomy { 
@@ -55,6 +62,18 @@ public class FurenikusEconomy {
     	//CapabilityManager.INSTANCE.register(ICart.class, new CartStorage(),  CartCapability.class);
     	
     	network = NetworkRegistry.INSTANCE.newSimpleChannel("FurenikusEconomy");
+    	
+    	network.registerMessage(StoreManagerUpdatePacket.Handler.class, StoreManagerUpdatePacket.class, 0, Side.SERVER);
+    	network.registerMessage(StoreManagerClearLogPacket.Handler.class, StoreManagerClearLogPacket.class, 1, Side.SERVER);
+    	network.registerMessage(StoreManagerWithdrawPacket.Handler.class, StoreManagerWithdrawPacket.class, 2, Side.SERVER);
+    	
+    	network.registerMessage(ShopUpdatePacket.Handler.class, ShopUpdatePacket.class, 4, Side.SERVER);
+    	network.registerMessage(StockUpdatePacket.Handler.class, StockUpdatePacket.class, 5, Side.SERVER);
+    	
+    	network.registerMessage(OpenGuiServerSide.Handler.class, OpenGuiServerSide.class, 6, Side.SERVER);
+    	
+    	
+    	
     	//Handler class, Packet class, Packet ID (+1), RECIEVING Side
     	//network.registerMessage(ATMWithdrawPacket.Handler.class, ATMWithdrawPacket.class, 0, Side.SERVER);
     	//network.registerMessage(SoundPacket.Handler.class, SoundPacket.class, 1, Side.SERVER);
@@ -107,8 +126,8 @@ public class FurenikusEconomy {
 	}
     
     public static void log(int level, String msg) {
-    	if (level >= EconConfig.debugLevel) {
+    	//if (level <= EconConfig.debugLevel) {
     		System.out.println("[Fureniku's Economy] " + msg);
-    	}
+    	//}
     }
 };

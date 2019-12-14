@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "furenikuseconomy:blocks/skyscraper_blocks_1_2",
+		"0": "furenikuseconomy:blocks/dark_grey",
 		"1": "furenikuseconomy:blocks/machine_metal",
 		"2": "furenikuseconomy:blocks/atm_textures",
 		"3": "furenikuseconomy:blocks/atm_buttons",
-		"particle": "furenikuseconomy:blocks/skyscraper_blocks_1_2"
+		"particle": "furenikuseconomy:blocks/dark_grey"
 	},
 	"elements": [
 		{

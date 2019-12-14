@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.store.shops.ShopBaseBlock;
-import com.silvaniastudios.econ.api.store.shops.StandaloneShopBase;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.IProperty;
@@ -37,12 +36,12 @@ public class VendingMachineBlock extends ShopBaseBlock {
 	
 	@Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
-		return new StandaloneShopBase(24, 0, true);
+		return new VendingMachineEntity();
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		openGui(world, pos, player, EconConstants.Gui.VENDING_MACHINE);
+		openGui(world, pos, player, EconConstants.Gui.VENDING_MACHINE_OWNER);
 		return true;
 	}
 	

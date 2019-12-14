@@ -1,5 +1,7 @@
 package com.silvaniastudios.econ.api.store;
 
+import javax.annotation.Nullable;
+
 import com.silvaniastudios.econ.api.EconUtils;
 import com.silvaniastudios.econ.api.store.management.StoreManagerEntity;
 
@@ -13,12 +15,10 @@ import net.minecraft.util.math.BlockPos;
 
 public class StoreEntityBase extends TileEntity {
 	
-	public BlockPos managerPos;
+	public BlockPos managerPos = new BlockPos(0,0,0);
 	
-	public String ownerUuid;
-	public String ownerName;
-	
-	int[] priceList;
+	public String ownerUuid = "";
+	public String ownerName = "";
 	
 	EconUtils utils = new EconUtils();
 	
@@ -48,10 +48,10 @@ public class StoreEntityBase extends TileEntity {
 		nbt.setString("ownerName", ownerName);
 		
 		nbt.setInteger("manPosX", managerPos.getX());
-		nbt.setInteger("manPosY", managerPos.getX());
-		nbt.setInteger("manPosZ", managerPos.getX());
+		nbt.setInteger("manPosY", managerPos.getY());
+		nbt.setInteger("manPosZ", managerPos.getZ());
 		
-		nbt.setIntArray("priceList", priceList);
+		
 		return writeNBT(nbt);
 	}
 	
@@ -66,7 +66,7 @@ public class StoreEntityBase extends TileEntity {
 		int z = nbt.getInteger("manPosZ");
 		managerPos = new BlockPos(x, y, z);
 		
-		priceList = nbt.getIntArray("priceList");
+		
 		readNBT(nbt);
 	}
 
@@ -100,7 +100,7 @@ public class StoreEntityBase extends TileEntity {
 	}
 	
 	public boolean canInteractWith(EntityPlayer playerIn) {
-        return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+        return !isInvalid();
     }
 	
 	public boolean isLoaded() {
@@ -112,24 +112,33 @@ public class StoreEntityBase extends TileEntity {
 	}
 	
 	public void sendUpdates() {
+		System.out.println("Sending data to client..");
 		this.markDirty();
 		
 		if (this.isLoaded()) {
 			final IBlockState state = world.getBlockState(pos);
 			this.getWorld().notifyBlockUpdate(this.pos, state, state, 3);
+			this.getWorld().scheduleBlockUpdate(pos,this.getBlockType(),0,0);
 		}
 	}
 	
 	@Override
+	@Nullable
 	public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(getPos(), 0, this.getUpdateTag());
+		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);
-		this.readFromNBT(pkt.getNbtCompound());
-		this.getWorld().notifyBlockUpdate(this.pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+		System.out.println("Client data retrieved!");
+		System.out.println("To prove it, the owner is " + ownerName);
+		handleUpdateTag(pkt.getNbtCompound());
 	}
 
 }

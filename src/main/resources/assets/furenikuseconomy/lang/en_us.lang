@@ -8,8 +8,8 @@ tile.furenikuseconomy.stock_chest.name=Stock Chest
 tile.furenikuseconomy.till.name=Register
 
 tile.furenikuseconomy.shop_shelves_full.name=Shop Shelves (Full)
-tile.furenikuseconomy.shop_shelves_half.name=
-tile.furenikuseconomy.shop_shelves_large.name=
+tile.furenikuseconomy.shop_shelves_half.name=Shop Shelves (Half)
+tile.furenikuseconomy.shop_shelves_large.name=Shop Shelves (Large)
 tile.furenikuseconomy.vending_machine.name=Vending Machine
 tile.furenikuseconomy..name=
 
@@ -36,12 +36,62 @@ item.atmInternals.name=ATM Internals
 item.atmScreen.name=ATM Screen
 item.atmButtons.name=ATM Buttons
 item.cpu.name=CPU
+item.store_stock_pairer.name=Store Pairing Device
 
 itemGroup.tabEcon=FlenixCities Economy
 
 econ.shop.trade.money_received=You have received %s from your trade with %s.
 
-econ.tooltip.shops.store_manager.1=Controls a shop, linking interfaces to stock.
+econ.gui.store_manager.shop_interface_title=Shop Interfaces
+econ.gui.store_manager.stock_chest_title=Stock Management
+econ.gui.store_manager.log_title=Store Log
+econ.gui.store_manager.balance_title=Current Shop Balance:
+econ.gui.store_manager.budget_title=Current Shop Budget:
+econ.gui.store_manager.withdraw=Withdraw
+
+econ.gui.store_manager.show_active=Show: Active
+econ.gui.store_manager.show_all=Show: All
+econ.gui.store_manager.open_shop=Open Shop
+econ.gui.store_manager.close_shop=Close Shop
+econ.gui.store_manager.show_budget=Budget
+econ.gui.store_manager.hide_budget=Budget
+
+econ.gui.store_manager.open_store_manager=Open Store Manager
+econ.gui.store_manager.store_manager_short=Manager
+econ.gui.store_manager.store_manager_name=Store Name
+econ.gui.store_manager.store_manager_owner=Shop Owner
+econ.gui.store_manager.store_manager_not_set=Manager Not Set
+
+econ.gui.store_manager.log.shop_added_short=Added new shop interface
+econ.gui.store_manager.log.shop_removed_short=Removed shop interface
+econ.gui.store_manager.log.stock_added_short=Added new stock management
+econ.gui.store_manager.log.stock_removed_short=Removed stock management
+econ.gui.store_manager.log.till_added_short=Added new cash register
+econ.gui.store_manager.log.till_removed_short=Removed cash register
+econ.gui.store_manager.log.cart_added_short=Added new cart dispenser
+econ.gui.store_manager.log.cart_removed_short=Removed cart dispenser
+econ.gui.store_manager.log.withdraw_balance_short=Withdrew shop balance
+econ.gui.store_manager.log.open_shop_short=Shop opened
+econ.gui.store_manager.log.close_shop_short=Shop closed
+
+econ.gui.store_manager.log.shop_added_full=Added new shop interface at %s, %s, %s to store manager.
+econ.gui.store_manager.log.shop_removed_full=Removed shop interface at %s, %s, %s from store manager.
+econ.gui.store_manager.log.stock_added_full=Added new stock management at %s, %s, %s to store manager.
+econ.gui.store_manager.log.stock_removed_full=Removed stock management at %s, %s, %s from store manager.
+econ.gui.store_manager.log.till_added_full=Added new cash register at %s, %s, %s to store manager.
+econ.gui.store_manager.log.till_removed_full=Removed cash register at %s, %s, %s from store manager.
+econ.gui.store_manager.log.cart_added_full=Added new cart dispenser at %s, %s, %s to store manager.
+econ.gui.store_manager.log.cart_removed_full=Removed cart dispenser at %s, %s, %s from store manager.
+econ.gui.store_manager.log.withdraw_balance_full=Withdraw %s from shop balance.
+econ.gui.store_manager.log.open_shop_full=The shop was opened
+econ.gui.store_manager.log.close_shop_full=The shop was closed
+
+econ.gui.shop_shelves_full.modify_item_position=Modify Item Display
+econ.gui.shop_shelves_full.modify_item_position.scale=Scale
+econ.gui.shop_shelves_full.modify_item_position.position=Position
+econ.gui.shop_shelves_full.modify_item_position.rotation=Rotation
+
+econ.tooltip.shops.store_manager.1=Controls a shop, linking the components together.
 econ.tooltip.shops.store_manager.2=Can be used to modify various aspects of the shop.
 econ.tooltip.shops.store_manager.3=Karen probably wants to talk to it.
 
@@ -50,9 +100,9 @@ econ.tooltip.shops.stock_chest.2=Can be configured to three modes. Hold Sneak fo
 econ.tooltip.shops.stock_chest.details.1.title=NORMAL
 econ.tooltip.shops.stock_chest.details.1.description=Provides Stock to shops. Default option.
 econ.tooltip.shops.stock_chest.details.2.title=BACK TO STOCK
-econ.tooltip.shops.stock_chest.details.2.description=When a player cart is closed, stock is placed here before anywhere else.
-econ.tooltip.shops.stock_chest.details.3.title=INBOUND
-econ.tooltip.shops.stock_chest.details.3.description=Stock can be placed here, but cannot be taken from here for a sale. Ideal for trading posts.
+econ.tooltip.shops.stock_chest.details.2.description=When a player cart is closed, stock is placed here. Cannot be used for stock.
+econ.tooltip.shops.stock_chest.details.3.title=REMOVE THIS
+econ.tooltip.shops.stock_chest.details.3.description=REMOVE THIS
 
 econ.tooltip.shops.till.1=Process the sale of a customers cart.
 econ.tooltip.shops.till.2=Required for shops which have cart systems.
@@ -76,6 +126,8 @@ econ.shop.open_cart=You have started a cart at %s. Press %s to view your cart.
 econ.shop.closed=This shop is currently closed.
 
 econ.shop.claimed=You have successfully claimed this %s.
+econ.shop.registered=You have successfully registered this %s with your Store Manager.
+econ.shop.register_failed=Failed to register with Store Manager (Check your device is connected, and this shop isn't already paired)
 
 econ.shop.customer.no_cart=You do not have a cart open for this shop.
 econ.shop.till_timeout=Your till session has timed out, and purchased items dropped to the floor.

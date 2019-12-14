@@ -18,8 +18,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TillEntity extends StoreEntityBase implements ITickable {
 	
-	String buyerName;
-	String buyerUuid;
+	String buyerName = "";
+	String buyerUuid = "";
 	int buyerCountdownTime;
 	boolean locked;
 	
@@ -90,10 +90,11 @@ public class TillEntity extends StoreEntityBase implements ITickable {
 	@Override
 	public NBTTagCompound writeNBT(NBTTagCompound nbt) {
 		nbt.setTag("items", inventory.serializeNBT());
-		
+
 		nbt.setString("buyerUuid", buyerUuid);
 		nbt.setString("buyerName", buyerName);
 		nbt.setInteger("buyerCountdownTime", buyerCountdownTime);
+
 		
 		nbt.setIntArray("moneyInventory", moneyInventory);
 		

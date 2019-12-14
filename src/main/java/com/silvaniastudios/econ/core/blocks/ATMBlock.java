@@ -2,6 +2,7 @@ package com.silvaniastudios.econ.core.blocks;
 
 import com.silvaniastudios.econ.api.EconConstants;
 import com.silvaniastudios.econ.api.EconUtils;
+import com.silvaniastudios.econ.core.EconConfig;
 import com.silvaniastudios.econ.core.FurenikusEconomy;
 import com.silvaniastudios.econ.core.items.ItemMoney;
 
@@ -49,7 +50,7 @@ public class ATMBlock extends EconBlockBase {
     				ItemMoney money = (ItemMoney) item.getItem();
     				if (econ.addMoney(player, money.moneyValue)) {
         				player.sendMessage(new TextComponentString(TextFormatting.GOLD + econ.formatBalance(money.getMoneyValue()) + TextFormatting.GREEN + " Deposited! Your balance is now " + TextFormatting.GOLD + econ.formatBalance(econ.getBalance(player))));
-        				player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!"));
+        				if (EconConfig.fastDepositNotification) { player.sendMessage(new TextComponentString(TextFormatting.ITALIC + "Next time, try shift-right clicking with an empty hand to deposit " + TextFormatting.ITALIC + "all your money!")); }
 
         				item.setCount(item.getCount()-1);
     				}
@@ -71,10 +72,6 @@ public class ATMBlock extends EconBlockBase {
     @Override
 	public TileEntity createTileEntity(World worldIn, IBlockState state) {
 		return new ATMEntity();
-	}
-		
-	public boolean renderAsNormalBlock() {
-		return false;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -98,6 +95,15 @@ public class ATMBlock extends EconBlockBase {
 	
     @Override
     public int damageDropped(IBlockState state) {
-    	return this.getMetaFromState(state);
+    	int meta = this.getMetaFromState(state);
+    	if (meta < 4) { 
+    		return 0;
+    	} else if (meta < 8) { 
+    		return 4;
+    	} else if (meta < 12) {
+    		return 8;
+    	} else {
+    		return 12;
+    	}
     }
 }

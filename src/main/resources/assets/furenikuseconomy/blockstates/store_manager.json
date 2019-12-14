@@ -1,0 +1,11 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuseconomy:unknown_model"
+	},
+	"variants": {
+		"inventory": [{}],
+		"normal": [{}]
+	}
+}
