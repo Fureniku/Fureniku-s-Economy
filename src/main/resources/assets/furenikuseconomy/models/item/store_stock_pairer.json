@@ -1,6 +1,12 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "furenikuseconomy:items/stock_chest_pairer_off"
-	}
+		"layer0": "furenikuseconomy:items/store_stock_pairer_off"
+	},
+	"overrides": [{
+		"predicate": {
+			"furenikuseconomy:pairer": 1
+		}, 
+		"model": "furenikuseconomy:item/store_stock_pairer_on"
+	}]
 }

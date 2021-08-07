@@ -2,10 +2,23 @@
 	"forge_marker": 1,
 	"defaults": {
 		"transform": "forge:default-block",
-		"model": "furenikuseconomy:cart"
+		"model": "furenikuseconomy:baskets_5"
 	},
 	"variants": {
 		"inventory": [{}],
-		"normal": [{}]
+		"facing": {
+			"north": {
+				"model": "furenikuseconomy:baskets_5", "y": 0
+			},
+			"east": {
+				"model": "furenikuseconomy:baskets_5", "y": 90
+			},
+			"south": {
+				"model": "furenikuseconomy:baskets_5", "y": 180
+			},
+			"west": {
+				"model": "furenikuseconomy:baskets_5", "y": 270
+			}
+		}
 	}
 }

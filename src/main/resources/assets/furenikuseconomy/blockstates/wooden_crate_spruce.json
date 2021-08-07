@@ -1,0 +1,15 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuseconomy:wooden_crate",
+		"textures": {
+			"0": "furenikuseconomy:blocks/wood_spruce",
+			"1": "furenikuseconomy:blocks/wood_spruce_dark"
+		}
+	},
+	"variants": {
+		"inventory": [{}],
+		"normal": [{}]
+	}
+}

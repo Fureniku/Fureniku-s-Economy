@@ -5,6 +5,15 @@ tile.furenikuseconomy.atm_block.name=ATM
 tile.furenikuseconomy.store_manager.name=Store Manager
 tile.furenikuseconomy.cart_dispenser.name=Cart Dispenser
 tile.furenikuseconomy.stock_chest.name=Stock Chest
+tile.furenikuseconomy.wooden_crate_oak.name=Oak Stock Crate
+tile.furenikuseconomy.wooden_crate_spruce.name=Spruce Stock Crate
+tile.furenikuseconomy.wooden_crate_birch.name=Birch Stock Crate
+tile.furenikuseconomy.wooden_crate_jungle.name=Jungle Stock Crate
+tile.furenikuseconomy.wooden_crate_acacia.name=Acacia Stock Crate
+tile.furenikuseconomy.wooden_crate_dark_oak.name=Dark Oak Stock Crate
+tile.furenikuseconomy.cardboard_box_closed.name=Box of Stock
+tile.furenikuseconomy.cardboard_box_open.name=Box of Stock (Open)
+tile.furenikuseconomy.back_to_stock.name=Back To Stock Chest
 tile.furenikuseconomy.till.name=Register
 
 tile.furenikuseconomy.shop_shelves_full.name=Shop Shelves (Full)
@@ -40,7 +49,16 @@ item.store_stock_pairer.name=Store Pairing Device
 
 itemGroup.tabEcon=FlenixCities Economy
 
+econ.event.player_log_out_cart=You are logging out; closing cart at %s.
+
+econ.overlay.cart_value=Cart Value: %s
+econ.overlay.cart_size=%s items in cart
+econ.overlay.cart_oversize=You do not have enough inventory space for this transaction!
+
 econ.shop.trade.money_received=You have received %s from your trade with %s.
+
+econ.gui.cart.customer_name=Customer: %s
+econ.gui.cart.value=Cost: %s
 
 econ.gui.store_manager.shop_interface_title=Shop Interfaces
 econ.gui.store_manager.stock_chest_title=Stock Management
@@ -48,11 +66,12 @@ econ.gui.store_manager.log_title=Store Log
 econ.gui.store_manager.balance_title=Current Shop Balance:
 econ.gui.store_manager.budget_title=Current Shop Budget:
 econ.gui.store_manager.withdraw=Withdraw
+econ.gui.store_manager.stock_manager=Stock Manager
 
 econ.gui.store_manager.show_active=Show: Active
 econ.gui.store_manager.show_all=Show: All
-econ.gui.store_manager.open_shop=Open Shop
-econ.gui.store_manager.close_shop=Close Shop
+econ.gui.store_manager.open_shop=Shop Closed
+econ.gui.store_manager.close_shop=Shop Open
 econ.gui.store_manager.show_budget=Budget
 econ.gui.store_manager.hide_budget=Budget
 
@@ -61,6 +80,17 @@ econ.gui.store_manager.store_manager_short=Manager
 econ.gui.store_manager.store_manager_name=Store Name
 econ.gui.store_manager.store_manager_owner=Shop Owner
 econ.gui.store_manager.store_manager_not_set=Manager Not Set
+
+econ.gui.store_manager.tooltip.withdraw=Withdraw all money from the shop directly to your bank account.
+econ.gui.store_manager.tooltip.addfunds=Add the entered amount to the shop's budget, from your bank account.
+econ.gui.store_manager.tooltip.removefunds=Remove the entered amount from the shop's budget, to your bank account.
+econ.gui.store_manager.tooltip.closeshop=Open or close the shop. A closed shop cannot perform any transactions.
+econ.gui.store_manager.tooltip.budget=I have no idea? Maybe using the budget vs free spend?
+econ.gui.store_manager.tooltip.clearlog=Clear the Store Log
+econ.gui.store_manager.tooltip.shops_all=Showing all connected shop interfaces
+econ.gui.store_manager.tooltip.shops_active=Only showing active shop interfaces
+econ.gui.store_manager.tooltip.stock_all=Showing all connected stock chests
+econ.gui.store_manager.tooltip.stock_active=Only showing active stock chests
 
 econ.gui.store_manager.log.shop_added_short=Added new shop interface
 econ.gui.store_manager.log.shop_removed_short=Removed shop interface
@@ -73,6 +103,10 @@ econ.gui.store_manager.log.cart_removed_short=Removed cart dispenser
 econ.gui.store_manager.log.withdraw_balance_short=Withdrew shop balance
 econ.gui.store_manager.log.open_shop_short=Shop opened
 econ.gui.store_manager.log.close_shop_short=Shop closed
+econ.gui.store_manager.log.customer_start_cart_short=New cart opened
+econ.gui.store_manager.log.customer_end_cart_short=Customer cart closed
+econ.gui.store_manager.log.return_stock_added_short=Added new back to stock chest
+econ.gui.store_manager.log.return_stock_removed_short=Removed back to stock chest
 
 econ.gui.store_manager.log.shop_added_full=Added new shop interface at %s, %s, %s to store manager.
 econ.gui.store_manager.log.shop_removed_full=Removed shop interface at %s, %s, %s from store manager.
@@ -85,24 +119,36 @@ econ.gui.store_manager.log.cart_removed_full=Removed cart dispenser at %s, %s, %
 econ.gui.store_manager.log.withdraw_balance_full=Withdraw %s from shop balance.
 econ.gui.store_manager.log.open_shop_full=The shop was opened
 econ.gui.store_manager.log.close_shop_full=The shop was closed
+econ.gui.store_manager.log.customer_start_cart_full=%s opened a cart at the shop.
+econ.gui.store_manager.log.customer_end_cart_full=%s closed their cart.
+econ.gui.store_manager.log.return_stock_added_full=Added new back to stock chest at %s, %s, %s to store manager.
+econ.gui.store_manager.log.return_stock_removed_full=Removed back to stock chest at %s, %s, %s from store manager.
 
 econ.gui.shop_shelves_full.modify_item_position=Modify Item Display
 econ.gui.shop_shelves_full.modify_item_position.scale=Scale
 econ.gui.shop_shelves_full.modify_item_position.position=Position
 econ.gui.shop_shelves_full.modify_item_position.rotation=Rotation
 
+econ.gui.shop_shelves_full.tooltip.store_manager_linked=Click to open the connected Store Manager
+econ.gui.shop_shelves_full.tooltip.store_manager_unlinked=Use a Pairing Device to connect this shop to a Store Manager.
+econ.gui.shop_shelves_full.tooltip.slot_price=Slot %s Price: 
+econ.gui.shop_shelves_full.tooltip.shelf_name=The name of this shelf, shown in the Manager and to customers.
+econ.gui.shop_shelves_full.tooltip.render=Select a slot to modify how its item renders
+econ.gui.shop_shelves_full.tooltip.rotation=Hold Ctrl or Shift to rotate faster
+
+econ.tooltip.shops.add_to_cart=Add To Cart
+econ.tooltip.shops.buy=Buy
+econ.tooltip.shops.sell=Sell
+
 econ.tooltip.shops.store_manager.1=Controls a shop, linking the components together.
 econ.tooltip.shops.store_manager.2=Can be used to modify various aspects of the shop.
 econ.tooltip.shops.store_manager.3=Karen probably wants to talk to it.
 
-econ.tooltip.shops.stock_chest.1=Holds stock for a shop.
-econ.tooltip.shops.stock_chest.2=Can be configured to three modes. Hold Sneak for details.
-econ.tooltip.shops.stock_chest.details.1.title=NORMAL
-econ.tooltip.shops.stock_chest.details.1.description=Provides Stock to shops. Default option.
-econ.tooltip.shops.stock_chest.details.2.title=BACK TO STOCK
-econ.tooltip.shops.stock_chest.details.2.description=When a player cart is closed, stock is placed here. Cannot be used for stock.
-econ.tooltip.shops.stock_chest.details.3.title=REMOVE THIS
-econ.tooltip.shops.stock_chest.details.3.description=REMOVE THIS
+econ.tooltip.shops.stock_chest.1=Holds large amount of a single item to use as stock for a shop.
+econ.tooltip.shops.stock_chest.2=Different styles are purely cosmetic and all function the same.
+
+econ.tooltip.shops.back_to_stock_chest.1=Holds items ready to return to stock, from a closed cart etc.
+econ.tooltip.shops.back_to_stock_chest.2=Highly recommended but not a shop requirement.
 
 econ.tooltip.shops.till.1=Process the sale of a customers cart.
 econ.tooltip.shops.till.2=Required for shops which have cart systems.
@@ -115,7 +161,7 @@ econ.tooltip.shops.trading_post.2=Kind of like a Villager, but player-made and n
 
 econ.tooltip.shops.trading_block.1=Perform a live trade of items and money between two players.
 
-econ.tooltip.shops.floating_shelves.1=Holds up to four types of stock.
+econ.tooltip.shops.floating_shelves.1=Holds up to four types of stock for sale.
 econ.tooltip.shops.floating_shelves.2=Must be paired to a Store Manager.
 
 econ.tooltip.shops.vending_machine.1=Holds up to 24 types of stock (Items only).
@@ -124,14 +170,26 @@ econ.tooltip.shops.vending_machine.2=Will only sell single units at once. Holds 
 econ.shop.not_owner=You do not own this shop.
 econ.shop.open_cart=You have started a cart at %s. Press %s to view your cart.
 econ.shop.closed=This shop is currently closed.
+econ.shop.owner.closed=Either your shop is closed, or this cart isn't linked to a shop.
+
+econ.shop.cart.unregistered=Please register this cart with your Store Manager to use.
 
 econ.shop.claimed=You have successfully claimed this %s.
+econ.shop.manager_set=You have marked this as the Manager in your Pairing Device.
 econ.shop.registered=You have successfully registered this %s with your Store Manager.
 econ.shop.register_failed=Failed to register with Store Manager (Check your device is connected, and this shop isn't already paired)
 
-econ.shop.customer.no_cart=You do not have a cart open for this shop.
+econ.shop.customer.open_cart_owner=%s has opened a cart at %s.
+econ.shop.customer.open_cart_customer=You have opened a cart at %s.
 econ.shop.till_timeout=Your till session has timed out, and purchased items dropped to the floor.
+
+econ.shop.customer.added_to_cart=%s has been added to your cart.
+econ.shop.customer.cart_full=Your cart is full! Please remove items or proceed to checkout.
+econ.shop.customer.out_of_stock=This item is currently out of stock.
+econ.shop.customer.no_cart=You do not have a cart open for this shop.
+
 econ.shop.customer.cart_closing_inactive=Your cart will close in 30 seconds due to inactivity.
+
 econ.shop.customer.cart_closed_inactive=Your cart has closed due to inactivity.
 econ.shop.customer.cart_closed_forced=Your cart at %s has been closed by the shop owner.
 econ.shop.customer.cart_closed_death=Your cart at %s has been closed due to your untimely demise.
@@ -139,3 +197,12 @@ econ.shop.customer.cart_closing_distance=You are travelling too far from %s, you
 econ.shop.customer.cart_closed_distance=Your cart at %s has been closed due to being too far away.
 econ.shop.customer.cart_closed_logout=Your cart at %s has been closed as you're offline. Not that you can see this anyway...
 econ.shop.customer.cart_closed_another_store=Your cart at %s has been closed due to you using another store.
+econ.shop.customer.cart_closed_shop_closed=Your cart at %s has been closed due to the shop closing.
+
+econ.shop.owner.cart_closed_inactive=%s's cart at %s has closed due to inactivity.
+econ.shop.owner.cart_closed_forced=You have closed %s's cart at %s.
+econ.shop.owner.cart_closed_death=%s's cart at %s has been closed due to their untimely demise.
+econ.shop.owner.cart_closed_distance=%s's cart at %s has been closed due to them being too far away.
+econ.shop.owner.cart_closed_logout=%s's cart at %s has been closed due to them logging out.
+econ.shop.owner.cart_closed_another_store=%s's cart at %s has been closed due to them using another store.
+econ.shop.owner.cart_closed_shop_closed=%s's cart at %s has been closed due to you closing the shop.

@@ -2,10 +2,23 @@
 	"forge_marker": 1,
 	"defaults": {
 		"transform": "forge:default-block",
-		"model": "furenikuseconomy:unknown_model"
+		"model": "furenikuseconomy:computer"
 	},
 	"variants": {
 		"inventory": [{}],
-		"normal": [{}]
+		"facing": {
+			"north": {
+				"model": "furenikuseconomy:computer", "y": 0
+			},
+			"east": {
+				"model": "furenikuseconomy:computer", "y": 90
+			},
+			"south": {
+				"model": "furenikuseconomy:computer", "y": 180
+			},
+			"west": {
+				"model": "furenikuseconomy:computer", "y": 270
+			}
+		}
 	}
 }

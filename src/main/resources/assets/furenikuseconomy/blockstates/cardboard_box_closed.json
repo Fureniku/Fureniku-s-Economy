@@ -1,0 +1,24 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"transform": "forge:default-block",
+		"model": "furenikuseconomy:cardboard_box_closed"
+	},
+	"variants": {
+		"inventory": [{}],
+		"facing": {
+			"north": {
+				"model": "furenikuseconomy:cardboard_box_closed", "y": 0
+			},
+			"east": {
+				"model": "furenikuseconomy:cardboard_box_closed", "y": 90
+			},
+			"south": {
+				"model": "furenikuseconomy:cardboard_box_closed", "y": 180
+			},
+			"west": {
+				"model": "furenikuseconomy:cardboard_box_closed", "y": 270
+			}
+		}
+	}
+}

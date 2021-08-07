@@ -6,6 +6,19 @@
 	},
 	"variants": {
 		"inventory": [{}],
-		"normal": [{}]
+		"facing": {
+			"north": {
+				"model": "furenikuseconomy:shop_shelf", "y": 0
+			},
+			"east": {
+				"model": "furenikuseconomy:shop_shelf", "y": 90
+			},
+			"south": {
+				"model": "furenikuseconomy:shop_shelf", "y": 180
+			},
+			"west": {
+				"model": "furenikuseconomy:shop_shelf", "y": 270
+			}
+		}
 	}
 }
